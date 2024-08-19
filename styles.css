@@ -1,0 +1,81 @@
+header {
+    background: black;
+    padding: 20px;
+    padding-left: 40px;
+    color: white;
+}
+
+h1 {
+    margin-bottom: auto;
+}
+
+body {
+    background: #f0f0f0;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin-top: 40px;
+    margin-left: 40px;    
+}
+
+button {
+    border-radius: 20%;
+    padding: 20px
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 250, 0.25);
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-size: larger;
+}
+
+a:visited {
+    color: white; 
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Ustawienia układu */
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.chart-box {
+    width: 45%; /* Ustawia szerokość wykresu na 45% szerokości rodzica */
+    min-width: 300px; /* Minimalna szerokość wykresu */
+}
+
+/* Dla pojedynczego wykresu poniżej */
+.chart-box-full {
+    width: 90%; /* Ustawia szerokość wykresu na 90% szerokości rodzica */
+    margin: 0 auto; /* Wyśrodkowanie wykresu */
+}
+
+/* Dla pojedynczego wykresu poniżej */
+.chart-box-full-50 {
+    width: 50%; 
+    margin: 0 auto; 
+}
