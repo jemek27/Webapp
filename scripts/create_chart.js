@@ -1,5 +1,5 @@
 function createChart(data, xAxisName, datasets) {
-    const ctx = document.getElementById('temperatureDetailedChart').getContext('2d');
+    const ctx = document.getElementById('detailedChart').getContext('2d');
 
     const chartData = datasets.map(dataset => ({
         label: dataset.label,

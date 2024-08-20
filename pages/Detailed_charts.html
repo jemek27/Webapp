@@ -22,30 +22,47 @@
 
     <div class="chart-container">
         <div class="chart-box-full">
-            <h2>Temperature Chart</h2>
-            <canvas id="temperatureDetailedChart" width="400" height="200"></canvas>
+            <!-- <h2>Temperature Chart</h2> -->
+            <canvas id="detailedChart" width="400" height="200"></canvas>
         </div>
     </div>
 
     <script src="../scripts/data_fetch.js"></script>
     <script src="../scripts/create_chart.js"></script>
     <script>
+    // fetchData().then(data => {
+    //     createChart(data, 'Temperature (°C)',[
+    //         {
+    //             label: 'Air Temperature (°C)',
+    //             dataKey: 'air',
+    //             borderColor: 'rgba(54, 162, 235, 1)',
+    //             backgroundColor: 'rgba(54, 162, 235, 0.2)'
+    //         },
+    //         {
+    //             label: 'Soil Temperature (°C)',
+    //             dataKey: 'soil',
+    //             borderColor: 'rgba(255, 99, 132, 1)',
+    //             backgroundColor: 'rgba(255, 99, 132, 0.2)'
+    //         },
+    //     ]);
+    // });
+
     fetchData().then(data => {
-    createChart(data, 'Temperature (°C)',[
-        {
-            label: 'Air Temperature (°C)',
-            dataKey: 'air',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)'
-        },
-        {
-            label: 'Soil Temperature (°C)',
-            dataKey: 'soil',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)'
-        },
-    ]);
-});
+        createChart(data, 'Humidity and Moisture (%)',[
+            {
+                label: 'Air humidity (%)',
+                dataKey: 'humidity',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)'
+            },
+            {
+                label: 'Soil moisture (%)',
+                dataKey: 'soil_moisture',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)'
+            },
+        ]);
+    });
     </script>
 </body>
 </html>
