@@ -3,18 +3,18 @@ function createChart(data) { //todo zrobić bardzeij uniwersalne, przesłać ca�
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: data.temperature.timestamps,  // Czas pomiaru
+            labels: data.timestamps,
             datasets: [
                 {
                     label: 'Air Temperature (°C)',
-                    data: data.temperature.air,
+                    data: data.air,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     fill: false
                 },
                 {
                     label: 'Soil Temperature (°C)',
-                    data: data.temperature.soil,
+                    data: data.soil,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     fill: false
