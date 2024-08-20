@@ -41,9 +41,26 @@ document.getElementById('datasetSelect').addEventListener('change', function() {
     const selectedIndex = this.value;
     const selectedDataset = datasets[selectedIndex];
 
-    // Wyświetl wykres na podstawie wybranych danych
     fetchData().then(data => {
         createChart(data, selectedDataset.label, [selectedDataset]);
+    });
+});
+
+document.getElementById('updateChart').addEventListener('click', function() {
+    const selectedIndex = document.getElementById('datasetSelect').value;
+    const selectedDataset = datasets[selectedIndex];
+
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    fetchData().then(data => {
+        let filteredData = data;
+
+        if (startDate && endDate) {
+            filteredData = filterDataByDateRange(data, startDate, endDate);
+        }
+
+        createChart(filteredData, selectedDataset.label, [selectedDataset]);
     });
 });
 

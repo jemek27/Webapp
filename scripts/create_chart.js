@@ -1,5 +1,27 @@
 let chartInstance = null;
 
+function filterDataByDateRange(data, startDate, endDate) { //todo jeśli nie ma start albo end to przyjąc max 
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const filteredLabels = data.timestamps.filter((timestamp, index) => {
+        const date = new Date(timestamp);
+        return date >= start && date <= end;
+    });
+
+    const filteredData = {};
+    for (const key in data) {
+        if (key !== 'timestamps') {
+            filteredData[key] = data[key].filter((_, index) => {
+                const date = new Date(data.timestamps[index]);
+                return date >= start && date <= end;
+            });
+        }
+    }
+
+    return { timestamps: filteredLabels, ...filteredData };
+}
+
 function createChart(data, yAxisName, datasets) {
     const ctx = document.getElementById('detailedChart').getContext('2d');
 

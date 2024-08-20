@@ -21,8 +21,15 @@
 
     <main> 
         <input type="text" id="searchInput" placeholder="Search dataset...">
-        <select id="datasetSelect" size="5">
-        </select>
+        <select id="datasetSelect" size="5"></select>
+        
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
+        
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
+        
+        <button id="updateChart">Update Chart</button>
     </main>
 
     <div class="chart-container">
