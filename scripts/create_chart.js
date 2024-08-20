@@ -1,25 +1,19 @@
-function createChart(data) { //todo zrobić bardzeij uniwersalne, przesłać całe data{} i id elemntu
+function createChart(data, xAxisName, datasets) {
     const ctx = document.getElementById('temperatureDetailedChart').getContext('2d');
+
+    const chartData = datasets.map(dataset => ({
+        label: dataset.label,
+        data: data[dataset.dataKey],
+        borderColor: dataset.borderColor,
+        backgroundColor: dataset.backgroundColor || 'rgba(0, 0, 0, 0.1)',
+        fill: dataset.fill || false
+    }));
+
     new Chart(ctx, {
         type: 'line',
         data: {
             labels: data.timestamps,
-            datasets: [
-                {
-                    label: 'Air Temperature (°C)',
-                    data: data.air,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false
-                },
-                {
-                    label: 'Soil Temperature (°C)',
-                    data: data.soil,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false
-                }
-            ]
+            datasets: chartData
         },
         options: {
             responsive: true,

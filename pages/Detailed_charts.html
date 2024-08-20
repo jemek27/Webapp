@@ -30,7 +30,22 @@
     <script src="../scripts/data_fetch.js"></script>
     <script src="../scripts/create_chart.js"></script>
     <script>
-        fetchData().then(data => createChart(data));
+    fetchData().then(data => {
+    createChart(data, 'Temperature (°C)',[
+        {
+            label: 'Air Temperature (°C)',
+            dataKey: 'air',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)'
+        },
+        {
+            label: 'Soil Temperature (°C)',
+            dataKey: 'soil',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)'
+        },
+    ]);
+});
     </script>
 </body>
 </html>
