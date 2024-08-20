@@ -21,6 +21,27 @@ function filterDataByDateRange(data, startDate, endDate) { //todo jeśli nie ma 
 
     return { timestamps: filteredLabels, ...filteredData };
 }
+//todo sprawdzić 
+// function filterDataByDateRange(data, startDate, endDate) { //todo jeśli nie ma start albo end to przyjąc max 
+//     const start = new Date(startDate);
+//     const end = new Date(endDate);
+//     const filteredData = { timestamps: [], ...Object.fromEntries(Object.keys(data).filter(key => key !== 'timestamps').map(key => [key, []])) };
+
+//     data.timestamps.forEach((timestamp, index) => {
+//         const date = new Date(timestamp);
+//         if (date >= start && date <= end) {
+//             filteredData.timestamps.push(timestamp);
+//             for (const key in filteredData) {
+//                 if (key !== 'timestamps') {
+//                     filteredData[key].push(data[key][index]);
+//                 }
+//             }
+//         }
+//     });
+    
+//     return filteredData;
+    
+// }
 
 function createChart(data, yAxisName, datasets) {
     const ctx = document.getElementById('detailedChart').getContext('2d');
@@ -52,7 +73,7 @@ function createChart(data, yAxisName, datasets) {
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
-                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw + '°C';
+                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
                         }
                     }
                 }
