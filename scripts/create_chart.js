@@ -1,5 +1,11 @@
-function createChart(data, xAxisName, datasets) {
+let chartInstance = null;
+
+function createChart(data, yAxisName, datasets) {
     const ctx = document.getElementById('detailedChart').getContext('2d');
+
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
 
     const chartData = datasets.map(dataset => ({
         label: dataset.label,
@@ -8,8 +14,8 @@ function createChart(data, xAxisName, datasets) {
         backgroundColor: dataset.backgroundColor || 'rgba(0, 0, 0, 0.1)',
         fill: dataset.fill || false
     }));
-
-    new Chart(ctx, {
+    
+    chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: data.timestamps,
@@ -39,7 +45,7 @@ function createChart(data, xAxisName, datasets) {
                 y: {
                     title: {
                         display: true,
-                        text: 'Temperature (°C)'
+                        text: yAxisName
                     },
                     suggestedMin: 0
                 }

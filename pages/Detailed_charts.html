@@ -19,6 +19,12 @@
         <h1>Environmental Data Visualization</h1>
     </header>
 
+    <main> 
+        <input type="text" id="searchInput" placeholder="Search dataset...">
+        <select id="datasetSelect" size="5">
+            <!-- Opcje zostaną wygenerowane dynamicznie -->
+        </select>
+    </main>
 
     <div class="chart-container">
         <div class="chart-box-full">
@@ -29,6 +35,8 @@
 
     <script src="../scripts/data_fetch.js"></script>
     <script src="../scripts/create_chart.js"></script>
+    <script src="../scripts/dropbox_search.js"></script>
+
     <script>
     // fetchData().then(data => {
     //     createChart(data, 'Temperature (°C)',[
@@ -47,22 +55,22 @@
     //     ]);
     // });
 
-    fetchData().then(data => {
-        createChart(data, 'Humidity and Moisture (%)',[
-            {
-                label: 'Air humidity (%)',
-                dataKey: 'humidity',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)'
-            },
-            {
-                label: 'Soil moisture (%)',
-                dataKey: 'soil_moisture',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)'
-            },
-        ]);
-    });
+    // fetchData().then(data => {
+    //     createChart(data, 'Humidity and Moisture (%)',[
+    //         {
+    //             label: 'Air humidity (%)',
+    //             dataKey: 'humidity',
+    //             borderColor: 'rgba(54, 162, 235, 1)',
+    //             backgroundColor: 'rgba(54, 162, 235, 0.2)'
+    //         },
+    //         {
+    //             label: 'Soil moisture (%)',
+    //             dataKey: 'soil_moisture',
+    //             borderColor: 'rgba(255, 99, 132, 1)',
+    //             backgroundColor: 'rgba(255, 99, 132, 0.2)'
+    //         },
+    //     ]);
+    // });
     </script>
 </body>
 </html>
