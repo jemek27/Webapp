@@ -55,7 +55,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Ustawienia układu */
 .chart-container {
     display: flex;
     justify-content: space-around;
@@ -68,14 +67,35 @@ a:hover {
     min-width: 300px; /* Minimalna szerokość wykresu */
 }
 
-/* Dla pojedynczego wykresu poniżej */
 .chart-box-full {
     width: 90%; /* Ustawia szerokość wykresu na 90% szerokości rodzica */
     margin: 0 auto; /* Wyśrodkowanie wykresu */
 }
 
-/* Dla pojedynczego wykresu poniżej */
 .chart-box-full-50 {
     width: 50%; 
     margin: 0 auto; 
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#datasetSelect {
+    display: none;
+    width: 320px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    max-height: 150px; 
+    overflow-y: auto; /* if more than max height then scrolling */
+}
+
+#datasetSelect option {
+    padding: 10px;
 }
