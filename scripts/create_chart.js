@@ -1,5 +1,5 @@
-function createChart(data) {
-    const ctx = document.getElementById('temperatureChart').getContext('2d');
+function createChart(data) { //todo zrobić bardzeij uniwersalne, przesłać całe data{} i id elemntu
+    const ctx = document.getElementById('temperatureDetailedChart').getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {

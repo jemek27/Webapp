@@ -18,5 +18,19 @@
         </nav>
         <h1>Environmental Data Visualization</h1>
     </header>
+
+
+    <div class="chart-container">
+        <div class="chart-box-full">
+            <h2>Temperature Chart</h2>
+            <canvas id="temperatureDetailedChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <script src="../scripts/data_fetch.js"></script>
+    <script src="../scripts/create_chart.js"></script>
+    <script>
+        fetchData().then(data => createChart(data));
+    </script>
 </body>
 </html>

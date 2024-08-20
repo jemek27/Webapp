@@ -6,7 +6,7 @@
     <title>LoRa Data Visualization</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts/chart_generation.js" defer></script>
+    <script src="scripts/data_generation.js" defer></script>
     <script src="scripts/chart_render.js" defer></script>
 </head>
 <body>
@@ -23,13 +23,11 @@
     
     <!-- Dwa wykresy obok siebie -->
     <div class="chart-container">
-        <!-- Wykres temperatury -->
         <div class="chart-box">
             <h2>Temperature (Soil vs Air)</h2>
             <canvas id="temperatureChart" width="400" height="200"></canvas>
         </div>
         
-        <!-- Wykres wilgotności -->
         <div class="chart-box">
             <h2>Humidity (Soil vs Air)</h2>
             <canvas id="humidityChart" width="400" height="200"></canvas>
@@ -38,7 +36,6 @@
 
     <!-- Jeden wykres poniżej -->
     <div class="chart-container">
-        <!-- Wykres nasłonecznienia -->
         <div class="chart-box-full">
             <h2>Sunlight Intensity</h2>
             <canvas id="sunlightChart" width="400" height="200"></canvas>
