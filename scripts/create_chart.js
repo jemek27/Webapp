@@ -1,47 +1,42 @@
 let chartInstance = null;
-
-function filterDataByDateRange(data, startDate, endDate) { //todo jeśli nie ma start albo end to przyjąc max 
+//TODO make it even faster 
+function filterDataByDateRange(data, startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    const filteredLabels = data.timestamps.filter((timestamp, index) => {
-        const date = new Date(timestamp);
-        return date >= start && date <= end;
-    });
-
-    const filteredData = {};
-    for (const key in data) {
-        if (key !== 'timestamps') {
-            filteredData[key] = data[key].filter((_, index) => {
-                const date = new Date(data.timestamps[index]);
-                return date >= start && date <= end;
-            });
+    let startDateIndex = -1;
+    let endDateIndex = -1;
+    let i = 0;
+    while (startDateIndex == -1) {
+        if (start <= new Date(data['timestamps'][i])) {
+            startDateIndex = i;
+        } else if (i == data['timestamps'].length - 1){ 
+            break;
+        } else {
+            ++i;
         }
     }
 
-    return { timestamps: filteredLabels, ...filteredData };
+    i = data['timestamps'].length - 1;
+    while (endDateIndex == -1) {
+        if (end >= new Date(data['timestamps'][i])) {
+            endDateIndex = i;
+        } else if (i < startDateIndex){ 
+            break;
+        } else {
+            --i;
+        }
+    }
+    
+    let filteredData = {};
+    for (let key in data) {
+        filteredData[key] = [];
+        for (let i = startDateIndex; i <= endDateIndex; ++i)
+        filteredData[key].push(data[key][i]);
+    }
+    
+    return filteredData;
 }
-//todo sprawdzić 
-// function filterDataByDateRange(data, startDate, endDate) { //todo jeśli nie ma start albo end to przyjąc max 
-//     const start = new Date(startDate);
-//     const end = new Date(endDate);
-//     const filteredData = { timestamps: [], ...Object.fromEntries(Object.keys(data).filter(key => key !== 'timestamps').map(key => [key, []])) };
-
-//     data.timestamps.forEach((timestamp, index) => {
-//         const date = new Date(timestamp);
-//         if (date >= start && date <= end) {
-//             filteredData.timestamps.push(timestamp);
-//             for (const key in filteredData) {
-//                 if (key !== 'timestamps') {
-//                     filteredData[key].push(data[key][index]);
-//                 }
-//             }
-//         }
-//     });
-    
-//     return filteredData;
-    
-// }
 
 function createChart(data, yAxisName, datasets) {
     const ctx = document.getElementById('detailedChart').getContext('2d');

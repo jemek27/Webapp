@@ -5,7 +5,7 @@ const datasets = [
     { label: 'Soil moisture (%)', dataKey: 'soil_moisture', borderColor: 'rgba(139, 69, 19, 1)', backgroundColor: 'rgba(139, 69, 19, 0.2)' },
     { label: 'Solar Intensity (W/m²)', dataKey: 'solar_intensity', borderColor: 'rgba(255, 204, 0, 1)', backgroundColor: 'rgba(255, 204, 0, 0.2)' },
 ];
-//todo już po wybraniu elementu gdy się wpisuje nazwę, opcje pojawiają się "ciekawie"
+//todo już po wybraniu elementu gdy się wpisuje 
 function populateDropdown() {
     const select = document.getElementById('datasetSelect');
     select.innerHTML = ''; // clear existing options
