@@ -19,9 +19,14 @@
         <h1>Control</h1>
     </header>
     <main>
-        <h3>Set signal send intervals</h3>
+        <h2>Set signal send intervals</h2>
         <p><input id="signalIntervalsTime" type="text" placeholder="Enter interval time >10min"></p>
         <p id="result"></p>
+        <br>
+        <h2>Send reset signal</h2>
+        <button onclick="toggleResetText()">Request reset</button>
+        
+        <p id="resetText" style="display: none;">Reset requested</p>
     </main> 
 </body>
 </html>

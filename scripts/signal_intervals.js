@@ -9,5 +9,14 @@ function handleIntervalInput() {
     });
 }
 
+function toggleResetText() {
+    const resetText = document.getElementById('resetText');
+    if (resetText.style.display === 'none') {
+        resetText.style.display = 'block';
+    } else {
+        resetText.style.display = 'none';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', handleIntervalInput);
-//todo zapis w czymś i potem czujnik to odczytuje?
+//TODO zapis w czymś i potem czujnik to odczytuje?
