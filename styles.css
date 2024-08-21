@@ -1,12 +1,31 @@
 header {
-    background: black;
-    padding: 20px;
-    padding-left: 40px;
-    color: white;
+    background: #222222; /* Zmieniono tło na bardziej intensywną czerń */
+    padding: 30px; /* Zwiększono padding, aby nagłówek wydawał się bardziej przestronny */
+    padding-left: 50px;
+    color: #e0e0e0; /* Delikatnie rozjaśniony kolor tekstu */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Dodano cień, aby nagłówek wydawał się unosić */
 }
 
 h1 {
-    margin-bottom: auto;
+    font-size: 2em; /* Zwiększono rozmiar czcionki, aby nagłówek bardziej się wyróżniał */
+}
+
+main {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 30px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
+}
+
+main input,
+main select,
+main label,
+main button {
+    margin-right: 15px;
 }
 
 body {
@@ -16,14 +35,21 @@ body {
     padding: 0;
 }
 
-main {
-    margin-top: 40px;
-    margin-left: 40px;    
+button {
+    background-color: #222222;
+    color: #f0f0f0; 
+    border: 2px solid #444444;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
-button {
-    border-radius: 20%;
-    padding: 20px
+button:hover {
+    background-color: #f0f0f0; 
+    color: #222222; 
+    border-color: #cccccc;
 }
 
 ul {
@@ -78,13 +104,12 @@ a:hover {
 }
 
 input {
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 15px; 
+    font-size: 18px;
+    width: 340px; 
+    border-radius: 15px; 
+    border: 1px solid #555555;
 }
-
 #datasetSelect {
     display: none;
     width: 320px;
