@@ -1,13 +1,20 @@
+body {
+    background: #f0f0f0;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
 header {
-    background: #222222; /* Zmieniono tło na bardziej intensywną czerń */
-    padding: 30px; /* Zwiększono padding, aby nagłówek wydawał się bardziej przestronny */
+    background: #222222;
+    padding: 30px; 
     padding-left: 50px;
-    color: #e0e0e0; /* Delikatnie rozjaśniony kolor tekstu */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Dodano cień, aby nagłówek wydawał się unosić */
+    color: #e0e0e0; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
-    font-size: 2em; /* Zwiększono rozmiar czcionki, aby nagłówek bardziej się wyróżniał */
+    font-size: 2.2em; 
 }
 
 main {
@@ -26,13 +33,11 @@ main select,
 main label,
 main button {
     margin-right: 15px;
+    margin-bottom: 15px;
 }
 
-body {
-    background: #f0f0f0;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
+#searchInput {
+    margin-bottom: 0px;
 }
 
 button {
@@ -52,34 +57,35 @@ button:hover {
     border-color: #cccccc;
 }
 
-ul {
+.nav-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-li {
+.nav-item {
     display: inline-block;
     margin-right: 20px;
 }
 
-li:hover {
-    background-color: rgba(255, 255, 250, 0.25);
-}
-
-a {
+.nav-item a {
     color: white;
     text-decoration: none;
-    font-size: larger;
+    font-size: 1.27em;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
-a:visited {
+.nav-item a:visited {
     color: white; 
 }
 
-a:hover {
+.nav-item a:hover {
     text-decoration: underline;
 }
+
+.nav-item:hover {
+    background-color: rgba(255, 255, 250, 0.5);
+}   
 
 .chart-container {
     display: flex;
@@ -106,21 +112,53 @@ a:hover {
 input {
     padding: 15px; 
     font-size: 18px;
-    width: 340px; 
+    width: 100%; 
+    max-width: 340px; 
     border-radius: 15px; 
     border: 1px solid #555555;
 }
 #datasetSelect {
     display: none;
-    width: 320px;
+    width: 100%;
+    max-width: 340px;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
     max-height: 150px; 
     overflow-y: auto; /* if more than max height then scrolling */
-}
+}   
 
 #datasetSelect option {
     padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .nav-item {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .nav-item a {
+        font-size: 1.1em; /* Mniejszy rozmiar tekstu na mniejszych ekranach */
+    }
+
+    main {
+        margin: 20px;
+    }
+
+    .chart-box, .chart-box-full, .chart-box-full-50 {
+        width: 100%; /* Pełna szerokość kontenera */
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 20px; /* Mniejsze paddingi na bardzo małych ekranach */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Mniejszy nagłówek */
+    }
 }
