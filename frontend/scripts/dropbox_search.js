@@ -5,39 +5,38 @@ const datasets = [
     { label: 'Soil moisture (%)', dataKey: 'soil_moisture', borderColor: 'rgba(139, 69, 19, 1)', backgroundColor: 'rgba(139, 69, 19, 0.2)' },
     { label: 'Solar Intensity (W/m²)', dataKey: 'solar_intensity', borderColor: 'rgba(255, 204, 0, 1)', backgroundColor: 'rgba(255, 204, 0, 0.2)' },
 ];
-//todo już po wybraniu elementu gdy się wpisuje 
-function populateDropdown() {
-    const select = document.getElementById('datasetSelect');
-    select.innerHTML = ''; // clear existing options
+
+function populateList() {
+    const datasetList = document.getElementById('datasetList');
+    datasetList.innerHTML = '';
 
     datasets.forEach((dataset, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.text = dataset.label;
-        select.appendChild(option);
+        const li = document.createElement('li');
+        li.textContent = dataset.label;
+        li.dataset.index = index;
+        datasetList.appendChild(li);
     });
 }
 
 document.getElementById('searchInput').addEventListener('focus', function() {
-    const select = document.getElementById('datasetSelect');
+    const select = document.getElementById('datasetList');
     select.style.display = 'block';
 });
 
 document.getElementById('searchInput').addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
-    const options = document.querySelectorAll('#datasetSelect option');
+    const items = document.querySelectorAll('#datasetList li');
 
-    options.forEach(option => {
-        const label = option.text.toLowerCase();
-        option.style.display = label.includes(searchTerm) ? '' : 'none';
+    items.forEach(item => {
+        const label = item.textContent.toLowerCase();
+        item.style.display = label.includes(searchTerm) ? '' : 'none';
     });
 
-    const visibleOptions = Array.from(options).filter(option => option.style.display !== 'none');
-    const select = document.getElementById('datasetSelect');
-    select.size = Math.min(visibleOptions.length, 5);
+    const datasetList = document.getElementById('datasetList');
+    datasetList.style.display = 'block';
 });
 
-document.getElementById('datasetSelect').addEventListener('change', function() {
+document.getElementById('datasetList').addEventListener('change', function() {
     const selectedIndex = this.value;
     const selectedDataset = datasets[selectedIndex];
 
@@ -46,52 +45,25 @@ document.getElementById('datasetSelect').addEventListener('change', function() {
     });
 });
 
-document.getElementById('updateChart').addEventListener('click', function() {
-    const selectedIndex = document.getElementById('datasetSelect').value;
+document.getElementById('datasetList').addEventListener('click', function(event) {
+    const selectedIndex = event.target.dataset.index;
     const selectedDataset = datasets[selectedIndex];
 
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-
     fetchData().then(data => {
-        let filteredData = data;
-
-        if (startDate && endDate) {
-            filteredData = filterDataByDateRange(data, startDate, endDate);
-        }
-
-        createChart(filteredData, selectedDataset.label, [selectedDataset]);
+        createChart(data, selectedDataset.label, [selectedDataset]);
     });
+
+    document.getElementById('datasetList').style.display = 'none';
+    document.getElementById('searchInput').value = event.target.textContent;
 });
 
 document.addEventListener('click', function(event) {
-    const select = document.getElementById('datasetSelect');
+    const datasetList = document.getElementById('datasetList');
     const searchInput = document.getElementById('searchInput');
 
-    if (!searchInput.contains(event.target) && !select.contains(event.target)) {
-        select.style.display = 'none';
+    if (!searchInput.contains(event.target) && !datasetList.contains(event.target)) {
+        datasetList.style.display = 'none';
     }
 });
 
-// document.getElementById('searchInput').addEventListener('input', function() {
-//     const searchTerm = this.value.toLowerCase();
-//     const options = document.querySelectorAll('#datasetSelect option');
-
-//     options.forEach(option => {
-//         const label = option.text.toLowerCase();
-//         option.style.display = label.includes(searchTerm) ? '' : 'none';
-//     });
-// });
-
-// document.getElementById('datasetSelect').addEventListener('change', function() {
-//     const selectedIndex = this.value;
-//     const selectedDataset = datasets[selectedIndex];
-
-    
-//     fetchData().then(data => {
-//         createChart(data, selectedDataset.label, [selectedDataset]);
-//     });
-// });
-
-
-populateDropdown();
+populateList();
