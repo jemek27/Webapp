@@ -21,12 +21,14 @@
     <main>
         <h2>Set signal send intervals</h2>
         <p><input id="signalIntervalsTime" type="text" placeholder="Enter interval time >10min"></p>
-        <p id="result"></p>
+        <p id="currentSignalIntervalsTime"></p>
+        <p id="intervalErrorMessage" style="color: red;"></p>
         <br>
         <h2>Send reset signal</h2>
         <button onclick="toggleResetText()">Request reset</button>
         
-        <p id="resetText" style="display: none;">Reset requested</p>
+        <p id="resetText" style="display: none;">Reset is requested</p>
     </main> 
+
 </body>
 </html>

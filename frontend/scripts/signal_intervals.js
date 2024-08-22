@@ -1,16 +1,15 @@
 function fetchSettings() {
-    fetch('http://localhost:3000/settings')  // Użyj pełnego URL
+    fetch('http://localhost:3000/settings') 
         .then(response => {
-            if (!response.ok) {  // Sprawdź, czy odpowiedź jest w porządku
+            if (!response.ok) {  
                 throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
             console.log('Settings:', data);
-            // Możesz zaktualizować UI w zależności od danych
-            // Na przykład:
-            // document.getElementById('someElement').textContent = data.someField;
+            document.getElementById('currentSignalIntervalsTime').textContent = `Current interval time: ${data.SignalIntervals} min`;
+            document.getElementById('resetText').style.display = data.ResetRequest ? 'block' : 'none';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -22,9 +21,9 @@ function handleIntervalInput() {
         if (event.key === 'Enter') {  
             const inputValue = parseFloat(event.target.value); 
             if (inputValue > 10) {
-                document.getElementById('result').textContent = `Set interval: ${inputValue}`;
+                document.getElementById('intervalErrorMessage').textContent = '';
 
-                fetch('/settings', {
+                fetch('http://localhost:3000/settings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -38,6 +37,8 @@ function handleIntervalInput() {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+            } else {
+                document.getElementById('intervalErrorMessage').textContent = 'Interval must be greater than 10 minutes.';
             }
         }
     });
@@ -50,7 +51,7 @@ function toggleResetText() {
     
     resetText.style.display = isResetRequested ? 'block' : 'none';
 
-    fetch('/settings', {
+    fetch('http://localhost:3000/settings', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -66,8 +67,7 @@ function toggleResetText() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', handleIntervalInput);
-document.addEventListener('DOMContentLoaded', toggleResetText);
-document.addEventListener('DOMContentLoaded', fetchSettings);
-fetchSettings();
-//TODO zapis w czymś i potem czujnik to odczytuje?
+document.addEventListener('DOMContentLoaded', function() {
+    fetchSettings();
+    handleIntervalInput();
+});
