@@ -1,9 +1,13 @@
+/* **Podstawowe Style** */
+
 body {
     background: #f0f0f0;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
 }
+
+/* **Nagłówek** */
 
 header {
     background: #222222;
@@ -17,26 +21,26 @@ h1 {
     font-size: 2.2em; 
 }
 
+/* **Główna Zawartość** */
+
 main {
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 30px;
+    margin: 50px;
     padding: 30px;
+    padding-bottom: 50px;
     background-color: #ffffff;
     border-radius: 15px; 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
 }
 
-main input,
-main label,
-main button {
-    margin-right: 15px;
-    margin-bottom: 15px;
-}
+/* **Formularze i Przyciski** */
 
-#searchInput {
-    margin-bottom: 0px;
+input {
+    padding: 15px; 
+    font-size: 18px;
+    width: 100%; 
+    max-width: 340px; 
+    border-radius: 15px; 
+    border: 1px solid #555555;
 }
 
 button {
@@ -55,6 +59,8 @@ button:hover {
     color: #222222; 
     border-color: #cccccc;
 }
+
+/* **Nawigacja** */
 
 .nav-list {
     margin: 0;
@@ -86,6 +92,8 @@ button:hover {
     background-color: rgba(255, 255, 250, 0.5);
 }   
 
+/* **Wykresy** */
+
 .chart-container {
     display: flex;
     justify-content: space-around;
@@ -108,13 +116,39 @@ button:hover {
     margin: 0 auto; 
 }
 
-input {
-    padding: 15px; 
-    font-size: 18px;
-    width: 100%; 
-    max-width: 340px; 
-    border-radius: 15px; 
-    border: 1px solid #555555;
+/* **Formularze w Głównej Zawartości** */
+
+.search-and-date-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 27px; 
+    row-gap: 10px;
+    align-items: center; 
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#startDateLabel,
+#endDateLabel {
+    display: inline-block;
+    width: 150px; 
+    white-space: nowrap; /* Zapobiega łamaniu tekstu */
+    overflow: hidden; 
+    text-overflow: ellipsis; /* Dodaje kropki, jeśli tekst jest zbyt długi */
+    text-align: left; 
+    margin-right: 5px; 
+}
+
+/* **Wyszukiwanie** */
+
+#searchInput {
+    width: 100%;
+    box-sizing: border-box; /* Umożliwia uwzględnienie paddingu i borderu w szerokości */
+    margin-bottom: 0;
 }
 
 .dataset-list {
@@ -125,11 +159,17 @@ input {
     max-width: 340px; 
     padding: 0;
     margin: 0;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    margin-top: 0; 
     border: 1px solid #ccc;
     max-height: 150px;
     overflow-y: auto;
+
+    position: absolute; /* Umożliwia pozycjonowanie listy */
+    top: 100%; /* Położenie listy tuż pod polem input */
+    left: 0;
+    z-index: 1000; /* Zapewnia, że lista będzie na wierzchu innych elementów */
+    background-color: white; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
 .dataset-list li {
@@ -140,6 +180,8 @@ input {
 .dataset-list li:hover {
     background-color: #f0f0f0;
 }
+
+/* **Media Queries** */
 
 @media (max-width: 768px) {
     .nav-item {
