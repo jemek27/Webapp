@@ -36,17 +36,10 @@ document.getElementById('searchInput').addEventListener('input', function() {
     datasetList.style.display = 'block';
 });
 
-document.getElementById('datasetList').addEventListener('change', function() {
-    const selectedIndex = this.value;
-    const selectedDataset = datasets[selectedIndex];
-
-    fetchData().then(data => {
-        createChart(data, selectedDataset.label, [selectedDataset]);
-    });
-});
+let selectedIndex = null;
 
 document.getElementById('datasetList').addEventListener('click', function(event) {
-    const selectedIndex = event.target.dataset.index;
+    selectedIndex = event.target.dataset.index;
     const selectedDataset = datasets[selectedIndex];
 
     fetchData().then(data => {
@@ -55,6 +48,24 @@ document.getElementById('datasetList').addEventListener('click', function(event)
 
     document.getElementById('datasetList').style.display = 'none';
     document.getElementById('searchInput').value = event.target.textContent;
+});
+
+document.getElementById('updateChart').addEventListener('click', function() {
+    if (selectedIndex != null) {
+        const selectedDataset = datasets[selectedIndex];
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        fetchData().then(data => {
+            let filteredData = data;
+
+            if (startDate && endDate) {
+                filteredData = filterDataByDateRange(data, startDate, endDate);
+            }
+
+            createChart(filteredData, selectedDataset.label, [selectedDataset]);
+        });
+    }
 });
 
 document.addEventListener('click', function(event) {
