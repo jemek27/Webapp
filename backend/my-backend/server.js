@@ -14,7 +14,7 @@ app.post('/settings', (req, res) => {
     const filePath = path.join(__dirname, 'sensor_settings.json');
     const newSettings = req.body;
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, data) => { //TODO if file does not exist try making one
         if (err) {
             console.error('Error reading file:', err);
             return res.status(500).json({ message: 'Error reading file' });
@@ -58,6 +58,51 @@ app.get('/settings', (req, res) => {
             console.error('Error parsing JSON:', parseErr);
             res.status(500).json({ message: 'Error parsing JSON' });
         }
+    });
+});
+
+// Nowy endpoint do dodawania danych do pliku JSON
+app.post('/data', (req, res) => {
+    const filePath = path.join(__dirname, 'data.json');
+    const newData = req.body;
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            // Jeśli plik nie istnieje, tworzymy nowy z pustą tablicą
+            if (err.code === 'ENOENT') {
+                return fs.writeFile(filePath, JSON.stringify([newData], null, 2), 'utf8', (err) => {
+                    if (err) {
+                        console.error('Error writing new file:', err);
+                        return res.status(500).json({ message: 'Error writing new file' });
+                    }
+                    console.log('Data added:', newData);
+                    res.json({ message: 'Data added successfully' });
+                });
+            } else {
+                console.error('Error reading file:', err);
+                return res.status(500).json({ message: 'Error reading file' });
+            }
+        }
+
+        let currentData;
+        try {
+            currentData = JSON.parse(data);
+        } catch (parseErr) {
+            console.error('Error parsing JSON:', parseErr);
+            return res.status(500).json({ message: 'Error parsing JSON' });
+        }
+
+        // Dodaj nowe dane do istniejącej tablicy
+        currentData.push(newData);
+
+        fs.writeFile(filePath, JSON.stringify(currentData, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+                return res.status(500).json({ message: 'Error writing file' });
+            }
+            console.log('Data added:', newData);
+            res.json({ message: 'Data added successfully' });
+        });
     });
 });
 
