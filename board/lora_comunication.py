@@ -42,7 +42,7 @@ def read_response():
                     print('mmmmmm data')
                     dataStrings = asciiString.split('P')  
                     for dataString in dataStrings:
-                        
+                        #float_list = [float(item) for item in dataStrings if item.strip()]
                         print(f"{dataString} {type(dataString)}") 
                         
             except ValueError: 
