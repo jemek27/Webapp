@@ -126,6 +126,10 @@ button:hover {
     align-items: center; 
 }
 
+.search-container {
+    position: relative;
+}
+
 .form-group {
     display: flex;
     align-items: center;
