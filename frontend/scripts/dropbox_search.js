@@ -6,6 +6,8 @@ const datasets = [
     { label: 'Solar Intensity (W/m²)', dataKey: 'solar_intensity', borderColor: 'rgba(255, 204, 0, 1)', backgroundColor: 'rgba(255, 204, 0, 0.2)' },
 ];
 
+let chartInstance = null;
+
 function populateList() {
     const datasetList = document.getElementById('datasetList');
     datasetList.innerHTML = '';
@@ -43,7 +45,7 @@ document.getElementById('datasetList').addEventListener('click', function(event)
     const selectedDataset = datasets[selectedIndex];
 
     fetchData().then(data => {
-        createChart(data, selectedDataset.label, [selectedDataset]);
+        chartInstance = createChart(data, selectedDataset.label, [selectedDataset], 'detailedChart', chartInstance);
     });
 
     document.getElementById('datasetList').style.display = 'none';
@@ -63,7 +65,7 @@ document.getElementById('updateChart').addEventListener('click', function() {
                 filteredData = filterDataByDateRange(data, startDate, endDate);
             }
 
-            createChart(filteredData, selectedDataset.label, [selectedDataset]);
+            chartInstance = createChart(filteredData, selectedDataset.label, [selectedDataset], 'detailedChart', chartInstance);
         });
     }
 });

@@ -1,4 +1,4 @@
-let chartInstance = null;
+
 //TODO make it even faster 
 function filterDataByDateRange(data, startDate, endDate) {
     const start = new Date(startDate);
@@ -38,8 +38,8 @@ function filterDataByDateRange(data, startDate, endDate) {
     return filteredData;
 }
 
-function createChart(data, yAxisName, datasets) {
-    const ctx = document.getElementById('detailedChart').getContext('2d');
+function createChart(data, yAxisName, datasets, canvasID, chartInstance) {
+    const ctx = document.getElementById(canvasID).getContext('2d');
 
     if (chartInstance) {
         chartInstance.destroy();
@@ -90,4 +90,6 @@ function createChart(data, yAxisName, datasets) {
             }
         }
     });
+
+    return chartInstance;
 }
