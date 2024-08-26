@@ -1,6 +1,6 @@
-async function fetchData() {
+async function fetchData(filePath) {
     try {
-        const response = await fetch('../test_sensor_data_temperature.json');
+        const response = await fetch(filePath);
         const data = await response.json();
         return data;
     } catch (error) {

@@ -103,7 +103,7 @@ button:hover {
 
 .chart-box {
     width: 45%; /* Ustawia szerokość wykresu na 45% szerokości rodzica */
-    min-width: 300px; /* Minimalna szerokość wykresu */
+    min-width: 500px; /* Minimalna szerokość wykresu */
 }
 
 .chart-box-full {
@@ -165,7 +165,7 @@ button:hover {
     margin: 0;
     margin-top: 0; 
     border: 1px solid #ccc;
-    max-height: 150px;
+    max-height: 250px;
     overflow-y: auto;
 
     position: absolute; /* Umożliwia pozycjonowanie listy */
@@ -186,6 +186,11 @@ button:hover {
 }
 
 /* **Media Queries** */
+@media (max-width: 1000px) {
+    .chart-box {
+        width: 90%; 
+    }
+}
 
 @media (max-width: 768px) {
     .nav-item {
@@ -195,7 +200,7 @@ button:hover {
     }
 
     .nav-item a {
-        font-size: 1.1em; /* Mniejszy rozmiar tekstu na mniejszych ekranach */
+        font-size: 1.1em;
     }
 
     main {
@@ -203,7 +208,7 @@ button:hover {
     }
 
     .chart-box, .chart-box-full, .chart-box-full-50 {
-        width: 100%; /* Pełna szerokość kontenera */
+        width: 98%;
     }
 }
 

@@ -3,6 +3,10 @@
 // Dane testowe
 const labels = ['08:00', '08:15', '08:30', '08:45'];
 
+const endDate = new Date();  
+const startDate = new Date();
+startDate.setDate(endDate.getDate() - 3);
+
 // Wykres temperatury (gleba i powietrze)
 const temperatureData = {
     labels: labels,
