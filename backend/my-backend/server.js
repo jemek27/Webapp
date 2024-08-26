@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Endpoint do aktualizacji ustawień
 app.post('/settings', (req, res) => {
     const filePath = path.join(__dirname, 'sensor_settings.json');
     const newSettings = req.body;
@@ -41,7 +40,6 @@ app.post('/settings', (req, res) => {
     });
 });
 
-// Endpoint do odczytu ustawień
 app.get('/settings', (req, res) => {
     const filePath = path.join(__dirname, 'sensor_settings.json');
 
@@ -61,7 +59,6 @@ app.get('/settings', (req, res) => {
     });
 });
 
-// Nowy endpoint do dodawania danych do pliku JSON
 app.post('/data', (req, res) => {
     const filePath = path.join(__dirname, 'data.json');
     const newData = req.body;
@@ -103,6 +100,25 @@ app.post('/data', (req, res) => {
             console.log('Data added:', newData);
             res.json({ message: 'Data added successfully' });
         });
+    });
+});
+
+app.get('/data', (req, res) => {
+    const filePath = path.join(__dirname, 'sensor_data.json');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).json({ message: 'Error reading file' });
+        }
+
+        try {
+            const data = JSON.parse(data);
+            res.json(data);
+        } catch (parseErr) {
+            console.error('Error parsing JSON:', parseErr);
+            res.status(500).json({ message: 'Error parsing JSON' });
+        }
     });
 });
 
