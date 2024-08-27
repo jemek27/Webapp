@@ -74,88 +74,84 @@ def processResponse(response):
         try: 
             asciiString = bytes.fromhex(extracted[0]).decode('utf-8')
             print(f"Translated: {asciiString}")
-            if asciiString == 'yo':
-                print('Roger')
-            elif asciiString[0] == 's':
-                partedString = asciiString.split(' ')
-                if len(partedString) > 1:
-                    currentSleepTime = int(partedString[1])
-                    print('GO to sleep for: ')  
-                    print(f'Curr sleep: {currentSleepTime}')  
-                
-                    with open(settingsPath, 'r') as file:
-                        data = json.load(file)
-                        signalIntervals = data.get("SignalIntervals")
-                        print("SignalIntervals:", signalIntervals)
-                    if currentSleepTime != int(signalIntervals):
-                        readingData = False
-                        time.sleep(2)
-                        send([signalIntervals])
-            else:
-                dataStrings = asciiString.split('P')  
-                del dataStrings[-1]
-                if len(dataStrings) == numOfData:
-                    print('mmmmmm data')
-                    floatList = [float(item) for item in dataStrings if item.strip()]
-                    print(floatList) 
-                    if os.path.exists(dataPath):
-                        with open(dataPath, 'r') as file:
-                            data = json.load(file)
-                    else:
-                        data = {
-                            "timestamps": [],                  
-                            "air_temperature": [],
-                            "soil_temperature": [],
-                            "air_humidity": [],
-                            "soil_moisture": [],
-                            "solar_intensity": [],
-                            "pressure": [],
-                            "AQI": [],
-                            "TVOC": [],
-                            "CO2": [],
-                            "wind_speed": [],
-                            "particles_2.5u": [],
-                            "particles_5u": [], 
-                            "particles_10u": []
-                        }
 
-                    dataLabels = [              
-                        "air_temperature",
-                        "air_humidity",
-                        "pressure",
-                        "solar_intensity",
-                        "AQI",
-                        "TVOC",
-                        "CO2",
-                        "soil_moisture",
-                        "wind_speed",
-                        "soil_temperature",
-                        "particles_2.5u",
-                        "particles_5u", 
-                        "particles_10u"
-                    ]
+            dataStrings = asciiString.split(';')  
+            print(dataStrings)
+            if len(dataStrings) == numOfData + 1: # +1 for sleep time
+                partedString = (dataStrings.pop()).split(' ')
 
-                    data['timestamps'].append(datetime.now().isoformat())
-                    for i in range(len(floatList) - 1):
-                        data[dataLabels[i]].append(floatList[i])
-
-                    with open(dataPath, 'w') as file:
+                with open(settingsPath, 'r') as file:
+                    data = json.load(file)
+                    signalIntervals = data.get("SignalIntervals")
+                    print("SignalIntervals:", signalIntervals)
+                    ResetRequest = data.get("ResetRequest")
+                    print("ResetRequest:", ResetRequest) 
+    
+                if int(ResetRequest):    
+                    readingData = False
+                    time.sleep(2)
+                    send(['RESET'])
+                    data["ResetRequest"] = 0  
+                    with open(settingsPath, 'w') as file:
                         json.dump(data, file, indent=4)
-
-                    print(f"Dane zostały zapisane do pliku {dataPath}.")
-
-                elif asciiString != "Sleep":
-                    with open(settingsPath, 'r') as file:
+                else:
+                    if len(partedString) > 1:
+                        currentSleepTime = float(partedString[1])
+                        print(f'Curr sleep: {currentSleepTime}')  
+    
+                        if currentSleepTime != float(signalIntervals):
+                            readingData = False
+                            time.sleep(2)
+                            send([signalIntervals])
+    
+                print('mmmmmm data')
+                floatList = [float(item) for item in dataStrings if item.strip()]
+                print(floatList) 
+                if os.path.exists(dataPath):
+                    with open(dataPath, 'r') as file:
                         data = json.load(file)
-                        ResetRequest = data.get("ResetRequest")
-                        print("ResetRequest:", ResetRequest)
-                    data["ResetRequest"] = 0   
-                    if int(ResetRequest):    
-                        readingData = False
-                        time.sleep(2)
-                        send(['RESET'])
-                        with open(settingsPath, 'w') as file:
-                            json.dump(data, file, indent=4)
+                else:
+                    data = {
+                        "timestamps": [],                  
+                        "air_temperature": [],
+                        "soil_temperature": [],
+                        "air_humidity": [],
+                        "soil_moisture": [],
+                        "solar_intensity": [],
+                        "pressure": [],
+                        "AQI": [],
+                        "TVOC": [],
+                        "CO2": [],
+                        "wind_speed": [],
+                        "particles_2.5u": [],
+                        "particles_5u": [], 
+                        "particles_10u": []
+                    }
+    
+                dataLabels = [              
+                    "air_temperature",
+                    "air_humidity",
+                    "pressure",
+                    "solar_intensity",
+                    "AQI",
+                    "TVOC",
+                    "CO2",
+                    "soil_moisture",
+                    "wind_speed",
+                    "soil_temperature",
+                    "particles_2.5u",
+                    "particles_5u", 
+                    "particles_10u"
+                ]
+    
+                data['timestamps'].append(datetime.now().isoformat())
+                for i in range(len(floatList) - 1):
+                    data[dataLabels[i]].append(floatList[i])
+    
+                with open(dataPath, 'w') as file:
+                    json.dump(data, file, indent=4)
+    
+                print(f"Dane zostały zapisane do pliku {dataPath}.")
         except ValueError: 
             print("Error: The provided string is not a valid hex string.")
 
