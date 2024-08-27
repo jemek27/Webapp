@@ -1,8 +1,11 @@
 import serial
 import time
 import json
+import os
+from datetime import datetime
 
 timeBetweenCommends = 1
+numOfData = 10
 
 
 commandsInit = [
@@ -65,8 +68,9 @@ def processResponse(response):
     extracted = parts[1::2]
     print(extracted) 
     if len(extracted) == 1:
-        settingsPath = '../backend/my-backend/sensor_settings.json'
-        dataPath = '../backend/my-backend/sensor_data.json'
+        scriptDir = os.path.dirname(os.path.abspath(__file__))
+        settingsPath = os.path.join(scriptDir, 'sensor_settings.json')
+        dataPath = os.path.join(scriptDir, 'sensor_data.json')
         try: 
             asciiString = bytes.fromhex(extracted[0]).decode('utf-8')
             print(f"Translated: {asciiString}")
@@ -86,29 +90,72 @@ def processResponse(response):
                     if currentSleepTime != int(signalIntervals):
                         readingData = False
                         time.sleep(2)
-                        send([signalIntervals/5])#TODO usunąć /5
+                        send([signalIntervals])
             else:
-                print('mmmmmm data')
                 dataStrings = asciiString.split('P')  
-                print(f"aaaaaaaa{dataStrings}")
-                for dataString in dataStrings:
-                    #float_list = [float(item) for item in dataStrings if item.strip()]
-                    print(f"{dataString} {type(dataString)}") 
-                    #TODO zapis danych
-                    
+                del dataStrings[-1]
+                if len(dataStrings) == numOfData:
+                    print('mmmmmm data')
+                    floatList = [float(item) for item in dataStrings if item.strip()]
+                    print(floatList) 
+                    if os.path.exists(dataPath):
+                        with open(dataPath, 'r') as file:
+                            data = json.load(file)
+                    else:
+                        data = {
+                            "timestamps": [],                  
+                            "air_temperature": [],
+                            "soil_temperature": [],
+                            "air_humidity": [],
+                            "soil_moisture": [],
+                            "solar_intensity": [],
+                            "pressure": [],
+                            "AQI": [],
+                            "TVOC": [],
+                            "CO2": [],
+                            "wind_speed": [],
+                            "particles_2.5u": [],
+                            "particles_5u": [], 
+                            "particles_10u": []
+                        }
+
+                    dataLabels = [              
+                        "air_temperature",
+                        "air_humidity",
+                        "pressure",
+                        "solar_intensity",
+                        "AQI",
+                        "TVOC",
+                        "CO2",
+                        "soil_moisture",
+                        "wind_speed",
+                        "soil_temperature",
+                        "particles_2.5u",
+                        "particles_5u", 
+                        "particles_10u"
+                    ]
+
+                    data['timestamps'].append(datetime.now().isoformat())
+                    for i in range(len(floatList) - 1):
+                        data[dataLabels[i]].append(floatList[i])
+
+                    with open(dataPath, 'w') as file:
+                        json.dump(data, file, indent=4)
+
+                    print(f"Dane zostały zapisane do pliku {dataPath}.")
+
+                elif asciiString != "Sleep":
                     with open(settingsPath, 'r') as file:
                         data = json.load(file)
                         ResetRequest = data.get("ResetRequest")
                         print("ResetRequest:", ResetRequest)
-                    #TODO nie po Sleep
                     data["ResetRequest"] = 0   
                     if int(ResetRequest):    
                         readingData = False
                         time.sleep(2)
-                        send(['RESET'])#TODO usunąć /5
+                        send(['RESET'])
                         with open(settingsPath, 'w') as file:
                             json.dump(data, file, indent=4)
-                    
         except ValueError: 
             print("Error: The provided string is not a valid hex string.")
 
