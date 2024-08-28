@@ -60,11 +60,10 @@ document.getElementById('updateChart').addEventListener('click', function() {
 
         fetchDataFormServer().then(data => {
             let filteredData = data;
+            start = startDate ? new Date(startDate) : new Date(0);
+            end = endDate ? new Date(endDate) : new Date();
 
-            if (startDate && endDate) {
-                filteredData = filterDataByDateRange(data, startDate, endDate);
-            }
-
+            filteredData = filterDataByDateRange(data, start, end);
             chartInstance = createChart(filteredData, selectedDataset.label, [selectedDataset], 'detailedChart', chartInstance);
         });
     }
