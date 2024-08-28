@@ -82,7 +82,7 @@ function createChart(data, yAxisName, datasets, canvasID, chartInstance) {
                         display: true,
                         text: yAxisName
                     },
-                    suggestedMin: 0
+                    //suggestedMin: 0
                 }
             }
         }
