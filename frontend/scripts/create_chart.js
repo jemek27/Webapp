@@ -1,9 +1,6 @@
 
 //TODO make it even faster 
-function filterDataByDateRange(data, startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
+function filterDataByDateRange(data, start, end) {
     let startDateIndex = -1;
     let endDateIndex = -1;
     let i = 0;
