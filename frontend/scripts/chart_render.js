@@ -29,7 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ];
 
 
-    fetchData('test_sensor_data_temperature.json').then(data => {
+    // fetchData('test_sensor_data_temperature.json').then(data => {
+    //     chartInstance = createChart(data, 'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
+    //     chartInstance = createChart(data, 'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
+    //     chartInstance = createChart(data, 'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
+    // });
+
+    fetchDataFormServer().then(data => {
         chartInstance = createChart(data, 'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
         chartInstance = createChart(data, 'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
         chartInstance = createChart(data, 'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
@@ -91,5 +97,5 @@ document.addEventListener('DOMContentLoaded', function() {
         data: pieData
     });
 
-    setInterval(fetchData, 10000);  // Aktualizacja co 10 s
+//    setInterval(fetchData, 10000);  // Aktualizacja co 10 s
 });

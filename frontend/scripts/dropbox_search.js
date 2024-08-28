@@ -44,7 +44,7 @@ document.getElementById('datasetList').addEventListener('click', function(event)
     selectedIndex = event.target.dataset.index;
     const selectedDataset = datasets[selectedIndex];
 
-    fetchData('../test_sensor_data_temperature.json').then(data => {
+    fetchDataFormServer().then(data => {
             chartInstance = createChart(data, selectedDataset.label, [selectedDataset], 'detailedChart', chartInstance);
         });
 
@@ -58,7 +58,7 @@ document.getElementById('updateChart').addEventListener('click', function() {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
 
-        fetchData('../test_sensor_data_temperature.json').then(data => {
+        fetchDataFormServer().then(data => {
             let filteredData = data;
 
             if (startDate && endDate) {

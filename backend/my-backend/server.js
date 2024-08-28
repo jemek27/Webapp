@@ -104,16 +104,16 @@ app.post('/data', (req, res) => {
 });
 
 app.get('/data', (req, res) => {
-    const filePath = path.join(__dirname, 'sensor_data.json');
+    const filePath = path.join(__dirname, 'test_sensor_data.json');
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, fileContent) => {
         if (err) {
             console.error('Error reading file:', err);
             return res.status(500).json({ message: 'Error reading file' });
         }
 
         try {
-            const data = JSON.parse(data);
+            const data = JSON.parse(fileContent);
             res.json(data);
         } catch (parseErr) {
             console.error('Error parsing JSON:', parseErr);
