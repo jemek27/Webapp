@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Renderowanie wykresów
     const endDate = new Date();  
     const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 3);
+    startDate.setDate(endDate.getDate() - 13);//TODO change to last 5 or 3 days
 
     let temperatureChart = null;
     let humidityChart = null;
@@ -22,9 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     ]
 
     fetchDataFormServer().then(data => {
-        chartInstance = createChart(data, 'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
-        chartInstance = createChart(data, 'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
-        chartInstance = createChart(data, 'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
+        filteredData = filterDataByDateRange(data, startDate, endDate);
+
+        chartInstance = createChart(filteredData, 'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
+        chartInstance = createChart(filteredData, 'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
+        chartInstance = createChart(filteredData, 'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
     });
     
     //left as examples
