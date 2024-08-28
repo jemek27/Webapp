@@ -124,7 +124,7 @@ def menageData(dataPath, dataStrings):
         "particles_5u", 
         "particles_10u"
     ]
-    data['timestamps'].append(datetime.now().isoformat())
+    data['timestamps'].append(datetime.now().isoformat(timespec='seconds'))
     for i in range(len(floatList) - 1):
         data[dataLabels[i]].append(floatList[i])
     with open(dataPath, 'w') as file:
