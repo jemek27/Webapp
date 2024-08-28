@@ -1,19 +1,9 @@
 function fetchSettings() {
-    fetch('http://localhost:3000/settings') 
-        .then(response => {
-            if (!response.ok) {  
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
+        fetchSettingsFormServer().then(data => {
             console.log('Settings:', data);
             document.getElementById('currentSignalIntervalsTime').textContent = `Current interval time: ${data.SignalIntervals} min`;
             document.getElementById('resetText').style.display = data.ResetRequest ? 'block' : 'none';
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
 
 function handleIntervalInput() {
