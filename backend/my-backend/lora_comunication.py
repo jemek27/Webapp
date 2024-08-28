@@ -63,6 +63,8 @@ def read_response(modeReceive = False):
     return readingData        
 
 def controlSignals(settingsPath, partedString):
+    readingData = True
+    
     with open(settingsPath, 'r') as file:
         data = json.load(file)
         signalIntervals = data.get("SignalIntervals")
@@ -84,6 +86,7 @@ def controlSignals(settingsPath, partedString):
                 readingData = False
                 time.sleep(2)
                 send([signalIntervals])
+    return readingData
 
 def menageData(dataPath, dataStrings):
     print('mmmmmm data')
@@ -149,7 +152,7 @@ def processResponse(response):
             if len(dataStrings) == numOfData + 1: # +1 for sleep time
                 partedString = (dataStrings.pop()).split(' ')
                 
-                controlSignals(settingsPath, partedString)
+                readingData = controlSignals(settingsPath, partedString)
                 menageData(dataPath, dataStrings)                
         except ValueError: 
             print("Error: The provided string is not a valid hex string.")
