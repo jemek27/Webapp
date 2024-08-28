@@ -64,7 +64,7 @@ def read_response(modeReceive = False):
 
 def controlSignals(settingsPath, partedString):
     readingData = True
-    
+
     with open(settingsPath, 'r') as file:
         data = json.load(file)
         signalIntervals = data.get("SignalIntervals")
@@ -166,5 +166,6 @@ while True:
     readingData = True
     receive(readingData)
     print(f"po receive {readingData}")
+    #TODO time of sensorSleep - something
 
 ser.close()

@@ -34,7 +34,7 @@ function handleIntervalInput() {
     });
 }
 
-
+//TODO function for post
 function toggleResetText() {
     const resetText = document.getElementById('resetText');
     const isResetRequested = resetText.style.display === 'none' ? 1 : 0;
