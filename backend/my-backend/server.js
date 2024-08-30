@@ -4,6 +4,14 @@ const path = require('path');
 const cors = require('cors'); 
 const app = express();
 
+const { Pool } = require('pg');
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'LoRaProject ',
+    password: 'admin',
+    port: 5432,
+  });
 app.use(cors());
 
 app.use(express.json());
@@ -120,6 +128,34 @@ app.get('/data', (req, res) => {
         }
     });
 });
+
+app.get('/dataDb', async (req, res) => {
+    const { startDate, endDate, columns } = req.query;
+  
+    try {
+      // Construct the SQL query
+      let query = 'SELECT * FROM environmental_data';
+      const queryParams = [];
+  
+      // Add date filtering to the query
+      if (startDate && endDate) {
+        queryParams.push(startDate, endDate);
+        query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
+      }
+  
+      // Add column filtering to the query
+      if (columns) {
+        const columnsArray = columns.split(',');
+        query = query.replace('*', columnsArray.join(', '));
+      }
+  
+      const result = await pool.query(query, queryParams);
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error querying the database:', error);
+      res.status(500).json({ message: 'Error querying the database' });
+    }
+  });
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');

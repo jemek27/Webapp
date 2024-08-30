@@ -45,7 +45,8 @@ function createChart(data, yAxisName, datasets, canvasID, chartInstance) {
 
     const chartData = datasets.map(dataset => ({
         label: dataset.label,
-        data: data[dataset.dataKey],
+        //data: data[dataset.dataKey],
+        data: data.map(item => item[dataset.dataKey]),
         borderColor: dataset.borderColor,
         backgroundColor: dataset.backgroundColor || 'rgba(0, 0, 0, 0.1)',
         fill: dataset.fill || false
@@ -54,7 +55,8 @@ function createChart(data, yAxisName, datasets, canvasID, chartInstance) {
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: data.timestamps,
+            //labels: data.timestamps,
+            labels: data.map(item => item.timestamp),
             datasets: chartData
         },
         options: {
