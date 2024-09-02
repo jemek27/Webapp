@@ -8,15 +8,11 @@ async function fetchData(filePath) {
     }
 }
 
-async function fetchDataFormServer() { 
-    return await fetchData('http://localhost:3000/data');
-} 
-
 async function fetchSettingsFormServer() { 
     return await fetchData('http://localhost:3000/settings');
 } 
 
-async function fetchDataDb(filePath, { startDate, endDate, columns }) {
+async function fetchDataDB(filePath, { startDate, endDate, columns }) {
     try {
         const queryParams = new URLSearchParams();
         if (startDate) queryParams.append('startDate', startDate);
@@ -30,3 +26,7 @@ async function fetchDataDb(filePath, { startDate, endDate, columns }) {
         console.error('Error fetching data:', error);
     }
 }
+
+async function fetchDataFromDB({ startDate, endDate, columns }) { 
+    return await fetchDataDB('http://localhost:3000/data', { startDate, endDate, columns });
+} 

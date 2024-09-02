@@ -54,7 +54,7 @@ document.getElementById('datasetList').addEventListener('click', function(event)
     end = new Date();
     end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
 
-    fetchDataDb('http://localhost:3000/dataDb', {
+    fetchDataDb('http://localhost:3000/data', {
         startDate: (new Date(0)).toISOString(),
         endDate: (end).toISOString(),
         columns: ['timestamp', selectedDataset.dataKey]
@@ -75,7 +75,7 @@ document.getElementById('updateChart').addEventListener('click', function() {
         end = endDate ? new Date(endDate) : new Date();
         end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
 
-        fetchDataDb('http://localhost:3000/dataDb', {
+        fetchDataDb('http://localhost:3000/data', {
             startDate: (start).toISOString(),
             endDate: (end).toISOString(),
             columns: ['timestamp', selectedDataset.dataKey]

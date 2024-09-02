@@ -8,6 +8,9 @@ import psycopg2
 from psycopg2 import sql
 import psycopg2.extras
 
+import signal
+import sys
+
 
 conn = psycopg2.connect(
     dbname="loraproject",
@@ -18,8 +21,23 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-timeBetweenCommends = 1
-numOfData = 10
+running = True
+
+def signal_handler(sig, frame):
+    global running
+    print('Signal received, shutting down...')
+    running = False
+    cur.close()
+    ser.close()
+    conn.close()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
+TIME_AFTER_RESET = 15
+TIME_BETWEEN_COMMENDS = 1
+NUM_OF_DATA = 10
 
 
 commandsInit = [
@@ -39,15 +57,15 @@ commandsTX = [
 def initDevice():
     for command in commandsInit:
         send_command(command)
-        time.sleep(timeBetweenCommends)  
+        time.sleep(TIME_BETWEEN_COMMENDS)  
         read_response()
-        time.sleep(timeBetweenCommends)
+        time.sleep(TIME_BETWEEN_COMMENDS)
 
 def receive(readingData):
     send_command(commandsRX[0])
-    time.sleep(timeBetweenCommends)  
+    time.sleep(TIME_BETWEEN_COMMENDS)  
     read_response()
-    time.sleep(timeBetweenCommends)
+    time.sleep(TIME_BETWEEN_COMMENDS)
     while readingData:
         readingData = read_response(True)
 
@@ -55,10 +73,10 @@ def send(messages):
     #while True:
     for message in messages:
         send_command(f'AT+TEST=TXLRSTR,"{str(message)}"\r\n')
-        time.sleep(timeBetweenCommends)  
+        time.sleep(TIME_BETWEEN_COMMENDS)  
         read_response()
-        time.sleep(timeBetweenCommends*2)
-    time.sleep(timeBetweenCommends)
+        time.sleep(TIME_BETWEEN_COMMENDS*2)
+    time.sleep(TIME_BETWEEN_COMMENDS)
 
 
 def send_command(command):
@@ -90,6 +108,7 @@ def controlSignals(settingsPath, partedString):
         time.sleep(2)
         send(['RESET'])
         data["ResetRequest"] = 0  
+        data["SignalIntervals"] = TIME_AFTER_RESET
         with open(settingsPath, 'w') as file:
             json.dump(data, file, indent=4)
     else:
@@ -235,7 +254,7 @@ def processResponse(response):
 
             dataStrings = asciiString.split(';')  
             print(dataStrings)
-            if len(dataStrings) == numOfData + 1: # +1 for sleep time
+            if len(dataStrings) == NUM_OF_DATA + 1: # +1 for sleep time
                 partedString = (dataStrings.pop()).split(' ')
                 
                 readingData = controlSignals(settingsPath, partedString)
@@ -249,10 +268,9 @@ def processResponse(response):
 
 ser = serial.Serial('/dev/ttyUSB0', baudrate=9600, timeout=1)
 initDevice()
-while True:
+while running:
     readingData = True
     receive(readingData)
-    print(f"po receive {readingData}")
     #TODO time of sensorSleep - something
 
 cur.close()

@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors'); 
 const app = express();
 
+
 const { Pool } = require('pg');
 const pool = new Pool({
     user: 'admin',
@@ -11,8 +12,37 @@ const pool = new Pool({
     database: 'loraproject',
     password: 'admin',
     port: 5432,
-  });
+});
 app.use(cors());
+
+
+const { spawn } = require('child_process');
+const pythonProcess = spawn('python3', ['-u', 'lora_comunication.py']);
+
+pythonProcess.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+});
+
+pythonProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+});
+
+pythonProcess.on('close', (code) => {
+    console.log(`Python process exited with code ${code}`);
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT signal received: closing Python process');
+    pythonProcess.kill('SIGINT');
+    process.exit();
+});
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing Python process');
+    pythonProcess.kill('SIGTERM');
+    process.exit();
+});
+
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -67,69 +97,7 @@ app.get('/settings', (req, res) => {
     });
 });
 
-// app.post('/data', (req, res) => {
-//     const filePath = path.join(__dirname, 'data.json');
-//     const newData = req.body;
-
-//     fs.readFile(filePath, 'utf8', (err, data) => {
-//         if (err) {
-//             if (err.code === 'ENOENT') {
-//                 return fs.writeFile(filePath, JSON.stringify([newData], null, 2), 'utf8', (err) => {
-//                     if (err) {
-//                         console.error('Error writing new file:', err);
-//                         return res.status(500).json({ message: 'Error writing new file' });
-//                     }
-//                     console.log('Data added:', newData);
-//                     res.json({ message: 'Data added successfully' });
-//                 });
-//             } else {
-//                 console.error('Error reading file:', err);
-//                 return res.status(500).json({ message: 'Error reading file' });
-//             }
-//         }
-
-//         let currentData;
-//         try {
-//             currentData = JSON.parse(data);
-//         } catch (parseErr) {
-//             console.error('Error parsing JSON:', parseErr);
-//             return res.status(500).json({ message: 'Error parsing JSON' });
-//         }
-
-//         // Dodaj nowe dane do istniejącej tablicy
-//         currentData.push(newData);
-
-//         fs.writeFile(filePath, JSON.stringify(currentData, null, 2), 'utf8', (err) => {
-//             if (err) {
-//                 console.error('Error writing file:', err);
-//                 return res.status(500).json({ message: 'Error writing file' });
-//             }
-//             console.log('Data added:', newData);
-//             res.json({ message: 'Data added successfully' });
-//         });
-//     });
-// });
-
-app.get('/data', (req, res) => {
-    const filePath = path.join(__dirname, 'sensor_data.json');
-
-    fs.readFile(filePath, 'utf8', (err, fileContent) => {
-        if (err) {
-            console.error('Error reading file:', err);
-            return res.status(500).json({ message: 'Error reading file' });
-        }
-
-        try {
-            const data = JSON.parse(fileContent);
-            res.json(data);
-        } catch (parseErr) {
-            console.error('Error parsing JSON:', parseErr);
-            res.status(500).json({ message: 'Error parsing JSON' });
-        }
-    });
-});
-
-app.get('/dataDb', async (req, res) => {
+app.get('/data', async (req, res) => {
     const { startDate, endDate, columns } = req.query;
   
     try {

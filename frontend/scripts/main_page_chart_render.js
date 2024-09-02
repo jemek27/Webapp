@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { label: 'Particles 10µm (µg/m³)', dataKey: 'particles_10u', borderColor: 'rgba(241, 196, 15, 1)', backgroundColor: 'rgba(241, 196, 15, 0.2)' }
     ];
 
-    fetchDataDb('http://localhost:3000/dataDb', {
+    fetchDataFromDB({
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
         columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
@@ -76,21 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
         particlesChart = createChart(data,       'Particles (µg/m³)', particlesDataset, 'particlesChart', particlesChart);
     });
 
-    // fetchDataFormServer().then(data => {
-    //     filteredData = filterDataByDateRange(data, startDate, endDate);
-
-    //     chartInstance = createChart(filteredData, 'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
-    //     chartInstance = createChart(filteredData, 'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
-    //     chartInstance = createChart(filteredData, 'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
-    //     chartInstance = createChart(filteredData, pressureDataset.label, pressureDataset, 'pressureChart', pressureChart);
-    //     chartInstance = createChart(filteredData, AQIDataset.label, AQIDataset, 'AQIChart', AQIChart);
-    //     chartInstance = createChart(filteredData, TVOCDataset.label, TVOCDataset, 'TVOCChart', TVOCChart);
-    //     chartInstance = createChart(filteredData, CO2Dataset.label, CO2Dataset, 'CO2Chart', CO2Chart);
-    //     chartInstance = createChart(filteredData, windSpeedDataset.label, windSpeedDataset, 'windSpeedChart', windSpeedChart);
-    //     chartInstance = createChart(filteredData, 'Particles (µg/m³)', particlesDataset, 'particlesChart', particlesChart);
-
-    // });
-    
     //left as examples
 
     const barData = {
@@ -157,6 +142,4 @@ document.addEventListener('DOMContentLoaded', function() {
         type: 'pie',
         data: pieData
     });
-
-//    setInterval(fetchData, 10000);  // Aktualizacja co 10 s
 });
