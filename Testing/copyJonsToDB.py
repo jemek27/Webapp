@@ -45,12 +45,12 @@ def read_data():
         print(row)
         #print(f"{row['timestamp']} {row['air_temperature']}")
 
-scriptDir = os.path.dirname(os.path.abspath(__file__))
-dataPath = os.path.join(scriptDir, 'sensor_data.json')
-with open(dataPath, 'r') as file:
-    data = json.load(file)
+# scriptDir = os.path.dirname(os.path.abspath(__file__))
+# dataPath = os.path.join(scriptDir, 'sensor_data.json')
+# with open(dataPath, 'r') as file:
+#     data = json.load(file)
 
-insert_data(data)
+# insert_data(data)
 read_data()
 
 cur.close()
