@@ -6,9 +6,9 @@ const app = express();
 
 const { Pool } = require('pg');
 const pool = new Pool({
-    user: 'postgres',
+    user: 'admin',
     host: 'localhost',
-    database: 'LoRaProject ',
+    database: 'loraproject',
     password: 'admin',
     port: 5432,
   });
@@ -133,11 +133,9 @@ app.get('/dataDb', async (req, res) => {
     const { startDate, endDate, columns } = req.query;
   
     try {
-      // Construct the SQL query
       let query = 'SELECT * FROM environmental_data';
       const queryParams = [];
   
-      // Add date filtering to the query
       if (startDate && endDate) {
         queryParams.push(startDate, endDate);
         query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;

@@ -17,7 +17,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const endDate = new Date();  
     const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 13);//TODO change to last 5 or 3 days
+    startDate.setDate(endDate.getDate() - 5);//TODO change to last 5 or 3 days
 
     let temperatureChart = null;
     let humidityChart = null;
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { label: 'Wind Speed (m/s)', dataKey: 'wind_speed', borderColor: 'rgba(0, 123, 255, 1)', backgroundColor: 'rgba(0, 123, 255, 0.2)' },
     ];
     const particlesDataset = [
-        { label: 'Particles 2.5µm (µg/m³)', dataKey: 'particles_2.5u', borderColor: 'rgba(192, 57, 43, 1)', backgroundColor: 'rgba(192, 57, 43, 0.2)' },
+        { label: 'Particles 2.5µm (µg/m³)', dataKey: 'particles_2_5u', borderColor: 'rgba(192, 57, 43, 1)', backgroundColor: 'rgba(192, 57, 43, 0.2)' },
         { label: 'Particles 5µm (µg/m³)', dataKey: 'particles_5u', borderColor: 'rgba(39, 174, 96, 1)', backgroundColor: 'rgba(39, 174, 96, 0.2)' },
         { label: 'Particles 10µm (µg/m³)', dataKey: 'particles_10u', borderColor: 'rgba(241, 196, 15, 1)', backgroundColor: 'rgba(241, 196, 15, 0.2)' }
     ];
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         endDate: endDate.toISOString(),
         columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
     }).then(data => {
-        // Tworzenie wykresów z użyciem danych z bazy danych
         temperatureChart = createChart(data,     'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
         humidityChart = createChart(data,        'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
         sunlightChart = createChart(data,        'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
