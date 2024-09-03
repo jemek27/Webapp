@@ -17,7 +17,7 @@ app.use(cors());
 
 
 const { spawn } = require('child_process');
-const pythonProcess = spawn('python3', ['-u', 'lora_comunication.py']);
+const pythonProcess = spawn('python3', ['-u', 'lora_communication.py']);
 
 pythonProcess.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
@@ -114,6 +114,8 @@ app.get('/data', async (req, res) => {
         const columnsArray = columns.split(',');
         query = query.replace('*', columnsArray.join(', '));
       }
+
+      query += ' ORDER BY timestamp ASC';
   
       const result = await pool.query(query, queryParams);
       res.json(result.rows);
