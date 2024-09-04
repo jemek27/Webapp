@@ -1,5 +1,4 @@
 
-//TODO make it even faster 
 function filterDataByDateRange(data, start, end) {
     end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
     let startDateIndex = -1;

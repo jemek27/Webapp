@@ -17,21 +17,30 @@
                 <li class="nav-item"><a href="index.html">Home</a></li>
                 <li class="nav-item"><a href="pages/Detailed_charts.html">Detailed charts</a></li>
                 <li class="nav-item"><a href="pages/Control.html">Control</a></li>
+                <li class="nav-item"><a href="pages/test.html">test</a></li>
             </ul>
         </nav>
         <h1>Environmental Data Visualization</h1>
     </header>
-    <!-- TODO add all charts-->
-    
+
+    <main>
+        <div class="slider-container">
+            <input type="range" min="1" max="30" value="5" class="slider" id="daysRange">
+            <div class="value-display" id="daysValue">5 days</div>
+        </div>
+    </main>
+        
     <div class="chart-container">
         <div class="chart-box">
             <h2>Temperature (Soil vs Air)</h2>
             <canvas id="temperatureChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
         
         <div class="chart-box">
             <h2>Humidity (Soil vs Air)</h2>
             <canvas id="humidityChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
     </div>
 
@@ -39,16 +48,19 @@
         <div class="chart-box">
             <h2>Sunlight Intensity</h2>
             <canvas id="sunlightChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
 
         <div class="chart-box">
             <h2>Pressure</h2>
             <canvas id="pressureChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
 
         <div class="chart-box">
             <h2>Wind speed</h2>
             <canvas id="windSpeedChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
     </div>  
 
@@ -56,45 +68,29 @@
         <div class="chart-box">
             <h2>Air Quality Index</h2>
             <canvas id="AQIChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
 
         <div class="chart-box">
             <h2>Total Volatile Organic Compounds</h2>
             <canvas id="TVOCChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
 
         <div class="chart-box">
             <h2>CO2</h2>
             <canvas id="CO2Chart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to enlarge</div>
         </div>
     </div>  
 
 
     <div class="chart-container">
-        <div class="chart-box-full">
+        <div class="chart-box chart-box-full">
             <h2>Particles</h2>
             <canvas id="particlesChart" width="400" height="200"></canvas>
+            <div class="resize-hint">Click on bottom to shrink</div>
         </div>
-    </div>  
-
-    <!-- left as examples -->
-    <div class="chart-container">
-        <div class="chart-box">
-            <h2>Tree Species Count</h2>
-            <canvas id="barChart"></canvas>
-        </div>
-
-        <div class="chart-box">
-            <h2>Average Tree Height by Species</h2>
-            <canvas id="horizontalBarChart"></canvas>
-        </div>
-    </div>
-
-    <div class="chart-container">
-        <div class="chart-box-full-50">
-            <h2>Forest Land Cover</h2>
-            <canvas id="pieChart"></canvas>
-        </div>
-    </div>
+    </div>      
 </body>
 </html>

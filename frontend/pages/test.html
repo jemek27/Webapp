@@ -1,0 +1,98 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LoRa Data Visualization</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="../styles.css">
+        <script src="../scripts/data_fetch.js"></script>
+        <script src="../scripts/create_chart.js"></script>  
+    </head>
+    <body>
+        <header>    
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="../index.html">Home</a></li>
+                    <li class="nav-item"><a href="Detailed_charts.html">Detailed charts</a></li>
+                    <li class="nav-item"><a href="Control.html">Control</a></li>
+                    <li class="nav-item"><a href="test.html">test</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="slider-container">
+                <input type="range" min="1" max="30" value="5" class="slider" id="daysRange">
+                <div class="value-display" id="daysValue">5 days</div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-box">
+                    <h2>Chart 1</h2>
+                    <canvas id="testSlider" width="400" height="200"></canvas>
+                    <div class="resize-hint">Click to enlarge</div>
+                </div>
+        
+                <div class="chart-box">
+                    <h2>Chart 2</h2>
+                    <canvas id="testSlider2" width="400" height="200"></canvas>
+                    <div class="resize-hint">Click to enlarge</div>
+                </div>
+            </div> 
+        </main>
+
+        <script>
+            const slider = document.getElementById('daysRange');
+            const output = document.getElementById('daysValue');
+            output.textContent = `${slider.value} days`;
+
+            
+            let temperatureChart = null;
+            let temperatureChart2 = null;
+
+            function updateCharts() {
+                const endDate = new Date();  
+                const startDate = new Date();
+                startDate.setDate(endDate.getDate() - slider.value);
+                const testDataset = [
+                    { label: 'Air Temperature (°C)', dataKey: 'air_temperature', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
+                ];
+
+                fetchDataFromDB({
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
+                }).then(data => {
+                    temperatureChart = createChart(data,     'Temperature (°C)', testDataset, 'testSlider', temperatureChart);
+                    temperatureChart2 = createChart(data,     'Temperature (°C)', testDataset, 'testSlider2', temperatureChart2);
+                });
+            }
+
+            slider.addEventListener('input', function() {
+                daysValue.textContent = `${this.value} days`;
+                updateCharts();
+            });
+        
+
+            const resizeHints = document.querySelectorAll('.resize-hint');
+            resizeHints.forEach((resizeHint) => {
+                resizeHint.addEventListener('click', function(event) {
+                    const chartBox = this.closest('.chart-box');
+                    toggleChartSize(chartBox); 
+                });
+            });
+            
+            function toggleChartSize(chartBox) {
+                chartBox.classList.toggle('chart-box-full');
+                const hintElement = chartBox.querySelector('.resize-hint');
+                if (chartBox.classList.contains('chart-box-full')) {
+                    hintElement.textContent = 'Click to shrink';
+                } else {
+                    hintElement.textContent = 'Click to enlarge';
+                }
+            }
+
+            updateCharts();
+        </script>
+    </body>
+    </html>
