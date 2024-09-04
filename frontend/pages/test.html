@@ -1,52 +1,147 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LoRa Data Visualization</title>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link rel="stylesheet" href="../styles.css">
-        <script src="../scripts/data_fetch.js"></script>
-        <script src="../scripts/create_chart.js"></script>  
-    </head>
-    <body>
-        <header>    
-            <nav>
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="../index.html">Home</a></li>
-                    <li class="nav-item"><a href="Detailed_charts.html">Detailed charts</a></li>
-                    <li class="nav-item"><a href="Control.html">Control</a></li>
-                    <li class="nav-item"><a href="test.html">test</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <div class="slider-container">
-                <input type="range" min="1" max="30" value="5" class="slider" id="daysRange">
-                <div class="value-display" id="daysValue">5 days</div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="chart-box">
-                    <h2>Chart 1</h2>
-                    <canvas id="testSlider" width="400" height="200"></canvas>
-                    <div class="resize-hint">Click to enlarge</div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoRa Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../scripts/data_fetch.js"></script>
+    <script src="../scripts/create_chart.js"></script>  
+</head>
+<body>
+    <header>    
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../index.html">Home</a></li>
+                <li class="nav-item"><a href="Detailed_charts.html">Detailed charts</a></li>
+                <li class="nav-item"><a href="Control.html">Control</a></li>
+                <li class="nav-item"><a href="test.html">test</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="slider-container">
+            <input type="range" min="1" max="30" value="5" class="slider" id="daysRange">
+            <div class="value-display" id="daysValue">5 days</div>
+        </div>
         
-                <div class="chart-box">
-                    <h2>Chart 2</h2>
-                    <canvas id="testSlider2" width="400" height="200"></canvas>
-                    <div class="resize-hint">Click to enlarge</div>
-                </div>
-            </div> 
-        </main>
+        <div class="chart-container">
+            <div class="chart-box">
+                <h2>Chart 1</h2>
+                <canvas id="testSlider" width="400" height="200"></canvas>
+                <div class="resize-hint">Click to enlarge</div>
+            </div>
+    
+            <div class="chart-box">
+                <h2>Chart 2</h2>
+                <canvas id="testSlider2" width="400" height="200"></canvas>
+                <div class="resize-hint">Click to enlarge</div>
+            </div>
+        </div> 
+        <br>
+        <button id="fetch-all-data">Pobierz wszystkie dane</button>
+        <button id="download-json">Pobierz JSON</button>
+        <button id="download-csv">Pobierz CSV</button>
+
+
+        <!-- Tabela do wyświetlania danych -->
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Air Temperature (°C)</th>
+                    <th>Soil Temperature (°C)</th>
+                    <th>Air Humidity (%)</th>
+                    <th>Soil Moisture (%)</th>
+                    <th>Solar Intensity (W/m²)</th>
+                    <th>Pressure (hPa)</th>
+                    <th>AQI</th>
+                    <th>TVOC (ppb)</th>
+                    <th>CO2 (ppm)</th>
+                    <th>Wind Speed (m/s)</th>
+                    <th>Particles 2.5μm</th>
+                    <th>Particles 5μm</th>
+                    <th>Particles 10μm</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
 
         <script>
+
+
+            document.getElementById('fetch-all-data').addEventListener('click', async () => {
+                try {
+                    const endDate = new Date();     
+                    const startDate = new Date(0);   
+                    const data = await fetchDataFromDB({
+                            startDate: startDate.toISOString(),
+                            endDate: endDate.toISOString(),
+                            columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
+                        });
+                    displayDataOnPage(data);
+                } catch (error) {
+                    console.error('Error fetching all data:', error);
+                }
+            });
+
+            function displayDataOnPage(data) {
+                const tableBody = document.getElementById('data-table').querySelector('tbody');
+                tableBody.innerHTML = ''; // Wyczyść tabelę
+
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.timestamp}</td>
+                        <td>${row.air_temperature}</td>
+                        <td>${row.soil_temperature}</td>
+                        <td>${row.air_humidity}</td>
+                        <td>${row.soil_moisture}</td>
+                        <td>${row.solar_intensity}</td>
+                        <td>${row.pressure}</td>
+                        <td>${row.AQI}</td>
+                        <td>${row.TVOC}</td>
+                        <td>${row.CO2}</td>
+                        <td>${row.wind_speed}</td>
+                        <td>${row.particles_2_5u}</td>
+                        <td>${row.particles_5u}</td>
+                        <td>${row.particles_10u}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            }
+
+            function downloadFile(data, fileName, fileType) {
+                const blob = new Blob([data], { type: fileType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            document.getElementById('download-json').addEventListener('click', () => {
+                const data = document.getElementById('data-table').querySelector('tbody').innerText;
+                downloadFile(JSON.stringify(data, null, 2), 'data.json', 'application/json');
+            });
+
+            document.getElementById('download-csv').addEventListener('click', () => {
+                const rows = Array.from(document.getElementById('data-table').querySelectorAll('tr'));
+                const csvData = rows.map(row => {
+                    const cells = Array.from(row.querySelectorAll('td,th')).map(cell => cell.textContent);
+                    return cells.join(',');
+                }).join('\n');
+                downloadFile(csvData, 'data.csv', 'text/csv');
+            });
+
+            // Inicjalizacja wykresów
             const slider = document.getElementById('daysRange');
             const output = document.getElementById('daysValue');
             output.textContent = `${slider.value} days`;
 
-            
             let temperatureChart = null;
             let temperatureChart2 = null;
 
@@ -94,5 +189,6 @@
 
             updateCharts();
         </script>
-    </body>
-    </html>
+    </main>
+</body>
+</html>
