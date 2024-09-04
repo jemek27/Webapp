@@ -51,7 +51,7 @@ app.post('/settings', (req, res) => {
     const filePath = path.join(__dirname, 'sensor_settings.json');
     const newSettings = req.body;
 
-    fs.readFile(filePath, 'utf8', (err, data) => { //TODO if file does not exist try making one
+    fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
             return res.status(500).json({ message: 'Error reading file' });
