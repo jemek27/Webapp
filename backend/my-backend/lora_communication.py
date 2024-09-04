@@ -85,13 +85,20 @@ def send_command(command):
 
 def read_response(modeReceive = False):
     readingData = True
-    if ser.in_waiting > 0:
-        response = ser.readline().decode('utf-8').strip()
-        print(f"Received: {response}")
-        if modeReceive:
-            readingData = processResponse(response)  
-    else :
-        time.sleep(0.1) 
+    try: 
+        if ser.in_waiting > 0:
+            response = ser.readline().decode('utf-8').strip()
+            print(f"Received: {response}")
+            print(f"Time: {datetime.now().isoformat(timespec='seconds')}")
+            if modeReceive:
+                readingData = processResponse(response)  
+        else :
+            time.sleep(0.1) 
+    except OSError as e:
+        print(f"Serial error: {e}")
+        ser.close()
+        time.sleep(2)
+        ser.open()
     return readingData        
 
 def controlSignals(settingsPath, partedString):
@@ -121,51 +128,51 @@ def controlSignals(settingsPath, partedString):
                 send([signalIntervals])
     return readingData
 
-def menageData(dataPath, dataStrings):
-    print('mmmmmm data')
-    floatList = [float(item) for item in dataStrings if item.strip()]
-    print(floatList) 
-    if os.path.exists(dataPath):
-        with open(dataPath, 'r') as file:
-            data = json.load(file)
-    else:
-        data = {
-            "timestamps": [],                  
-            "air_temperature": [],
-            "soil_temperature": [],
-            "air_humidity": [],
-            "soil_moisture": [],
-            "solar_intensity": [],
-            "pressure": [],
-            "AQI": [],
-            "TVOC": [],
-            "CO2": [],
-            "wind_speed": [],
-            "particles_2.5u": [],
-            "particles_5u": [], 
-            "particles_10u": []
-        }
-    dataLabels = [              
-        "air_temperature",
-        "air_humidity",
-        "pressure",
-        "solar_intensity",
-        "AQI",
-        "TVOC",
-        "CO2",
-        "soil_moisture",
-        "wind_speed",
-        "soil_temperature",
-        "particles_2.5u",
-        "particles_5u", 
-        "particles_10u"
-    ]
-    data['timestamps'].append(datetime.now().isoformat(timespec='seconds'))
-    for i in range(len(floatList) - 1):
-        data[dataLabels[i]].append(floatList[i])
-    with open(dataPath, 'w') as file:
-        json.dump(data, file, indent=4)
-    print(f"Dane zostały zapisane do pliku {dataPath}.")
+# def menageData(dataPath, dataStrings):
+#     print('mmmmmm data')
+#     floatList = [float(item) for item in dataStrings if item.strip()]
+#     print(floatList) 
+#     if os.path.exists(dataPath):
+#         with open(dataPath, 'r') as file:
+#             data = json.load(file)
+#     else:
+#         data = {
+#             "timestamps": [],                  
+#             "air_temperature": [],
+#             "soil_temperature": [],
+#             "air_humidity": [],
+#             "soil_moisture": [],
+#             "solar_intensity": [],
+#             "pressure": [],
+#             "AQI": [],
+#             "TVOC": [],
+#             "CO2": [],
+#             "wind_speed": [],
+#             "particles_2.5u": [],
+#             "particles_5u": [], 
+#             "particles_10u": []
+#         }
+#     dataLabels = [              
+#         "air_temperature",
+#         "air_humidity",
+#         "pressure",
+#         "solar_intensity",
+#         "AQI",
+#         "TVOC",
+#         "CO2",
+#         "soil_moisture",
+#         "wind_speed",
+#         "soil_temperature",
+#         "particles_2.5u",
+#         "particles_5u", 
+#         "particles_10u"
+#     ]
+#     data['timestamps'].append(datetime.now().isoformat(timespec='seconds'))
+#     for i in range(len(floatList) - 1):
+#         data[dataLabels[i]].append(floatList[i])
+#     with open(dataPath, 'w') as file:
+#         json.dump(data, file, indent=4)
+#     print(f"Dane zostały zapisane do pliku {dataPath}.")
 
 
 def insert_data(data):
@@ -191,6 +198,7 @@ def insert_data(data):
                 )
             )
         conn.commit()
+        print("Data was saved")
     except Exception as e:
         print(f"Error inserting data: {e}")
         conn.rollback()
@@ -235,7 +243,7 @@ def menageDataDb(dataStrings):
         data[dataLabels[i]].append(floatList[i])
 
     insert_data(data)
-    # print("Data was saved")
+
 
 
 
