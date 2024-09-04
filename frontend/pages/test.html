@@ -9,6 +9,57 @@
     <script src="../scripts/data_fetch.js"></script>
     <script src="../scripts/create_chart.js"></script>  
 </head>
+<style>
+    /* Ogólne style dla tabeli */
+table {
+    width: 100%; /* Szerokość tabeli na pełną szerokość kontenera */
+    border-collapse: collapse; /* Łączenie granic komórek */
+    margin-bottom: 20px; /* Odstęp poniżej tabeli */
+}
+
+/* Stylowanie nagłówków tabeli */
+th {
+    background-color: #222222; /* Tło nagłówka */
+    color: white; /* Kolor tekstu nagłówka */
+    padding: 12px 8px; /* Odstępy wewnątrz komórek nagłówka */
+    text-align: left; /* Wyrównanie tekstu w nagłówku */
+    font-weight: bold; /* Pogrubienie tekstu nagłówka */
+    border-bottom: 2px solid #ddd; /* Linia pod nagłówkiem */
+}
+
+/* Stylowanie wierszy i komórek tabeli */
+td {
+    padding: 10px 8px; /* Odstępy wewnątrz komórek danych */
+    border-bottom: 1px solid #ddd; /* Linia pod komórkami */
+}
+
+/* Stylowanie dla nieparzystych wierszy (przeplatane kolory) */
+tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Tło dla nieparzystych wierszy */
+}
+
+/* Stylowanie dla parzystych wierszy */
+tr:nth-child(even) {
+    background-color: #ffffff; /* Tło dla parzystych wierszy */
+}
+
+/* Stylizacja wiersza na hover */
+tr:hover {
+    background-color: #ddd; /* Zmiana tła na hover */
+}
+
+/* Stylizacja dla całej tabeli w mniejszych ekranach */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Zmniejsz tekst na mniejszych ekranach */
+    }
+}
+
+/* Stylowanie obramowania */
+table, th, td {
+    border: 1px solid #ddd; /* Dodanie cienkiego obramowania */
+}
+</style>
 <body>
     <header>    
         <nav>
@@ -20,175 +71,112 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="slider-container">
-            <input type="range" min="1" max="30" value="5" class="slider" id="daysRange">
-            <div class="value-display" id="daysValue">5 days</div>
+    <div class="main-content">
+        <div class="button-bar search-and-date-container"> 
+            <button id="fetch-all-data">Fetch all data</button>
+            <button id="download-json">Download JSON</button>
+            <button id="download-csv">Download CSV</button>
         </div>
-        
-        <div class="chart-container">
-            <div class="chart-box">
-                <h2>Chart 1</h2>
-                <canvas id="testSlider" width="400" height="200"></canvas>
-                <div class="resize-hint">Click to enlarge</div>
-            </div>
-    
-            <div class="chart-box">
-                <h2>Chart 2</h2>
-                <canvas id="testSlider2" width="400" height="200"></canvas>
-                <div class="resize-hint">Click to enlarge</div>
-            </div>
-        </div> 
-        <br>
-        <button id="fetch-all-data">Pobierz wszystkie dane</button>
-        <button id="download-json">Pobierz JSON</button>
-        <button id="download-csv">Pobierz CSV</button>
+        <main>
+            <!-- Tabela do wyświetlania danych -->
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Air Temperature (°C)</th>
+                        <th>Soil Temperature (°C)</th>
+                        <th>Air Humidity (%)</th>
+                        <th>Soil Moisture (%)</th>
+                        <th>Solar Intensity (W/m²)</th>
+                        <th>Pressure (hPa)</th>
+                        <th>AQI</th>
+                        <th>TVOC (ppb)</th>
+                        <th>CO2 (ppm)</th>
+                        <th>Wind Speed (m/s)</th>
+                        <th>Particles 2.5μm</th>
+                        <th>Particles 5μm</th>
+                        <th>Particles 10μm</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </main>
+    </div>
+</body>
+<script>     
+    let fetchedData = []; 
 
-
-        <!-- Tabela do wyświetlania danych -->
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Air Temperature (°C)</th>
-                    <th>Soil Temperature (°C)</th>
-                    <th>Air Humidity (%)</th>
-                    <th>Soil Moisture (%)</th>
-                    <th>Solar Intensity (W/m²)</th>
-                    <th>Pressure (hPa)</th>
-                    <th>AQI</th>
-                    <th>TVOC (ppb)</th>
-                    <th>CO2 (ppm)</th>
-                    <th>Wind Speed (m/s)</th>
-                    <th>Particles 2.5μm</th>
-                    <th>Particles 5μm</th>
-                    <th>Particles 10μm</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-
-        <script>
-
-
-            document.getElementById('fetch-all-data').addEventListener('click', async () => {
-                try {
-                    const endDate = new Date();     
-                    const startDate = new Date(0);   
-                    const data = await fetchDataFromDB({
-                            startDate: startDate.toISOString(),
-                            endDate: endDate.toISOString(),
-                            columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
-                        });
-                    displayDataOnPage(data);
-                } catch (error) {
-                    console.error('Error fetching all data:', error);
-                }
-            });
-
-            function displayDataOnPage(data) {
-                const tableBody = document.getElementById('data-table').querySelector('tbody');
-                tableBody.innerHTML = ''; // Wyczyść tabelę
-
-                data.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row.timestamp}</td>
-                        <td>${row.air_temperature}</td>
-                        <td>${row.soil_temperature}</td>
-                        <td>${row.air_humidity}</td>
-                        <td>${row.soil_moisture}</td>
-                        <td>${row.solar_intensity}</td>
-                        <td>${row.pressure}</td>
-                        <td>${row.AQI}</td>
-                        <td>${row.TVOC}</td>
-                        <td>${row.CO2}</td>
-                        <td>${row.wind_speed}</td>
-                        <td>${row.particles_2_5u}</td>
-                        <td>${row.particles_5u}</td>
-                        <td>${row.particles_10u}</td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            }
-
-            function downloadFile(data, fileName, fileType) {
-                const blob = new Blob([data], { type: fileType });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-
-            document.getElementById('download-json').addEventListener('click', () => {
-                const data = document.getElementById('data-table').querySelector('tbody').innerText;
-                downloadFile(JSON.stringify(data, null, 2), 'data.json', 'application/json');
-            });
-
-            document.getElementById('download-csv').addEventListener('click', () => {
-                const rows = Array.from(document.getElementById('data-table').querySelectorAll('tr'));
-                const csvData = rows.map(row => {
-                    const cells = Array.from(row.querySelectorAll('td,th')).map(cell => cell.textContent);
-                    return cells.join(',');
-                }).join('\n');
-                downloadFile(csvData, 'data.csv', 'text/csv');
-            });
-
-            // Inicjalizacja wykresów
-            const slider = document.getElementById('daysRange');
-            const output = document.getElementById('daysValue');
-            output.textContent = `${slider.value} days`;
-
-            let temperatureChart = null;
-            let temperatureChart2 = null;
-
-            function updateCharts() {
-                const endDate = new Date();  
-                const startDate = new Date();
-                startDate.setDate(endDate.getDate() - slider.value);
-                const testDataset = [
-                    { label: 'Air Temperature (°C)', dataKey: 'air_temperature', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
-                ];
-
-                fetchDataFromDB({
+    document.getElementById('fetch-all-data').addEventListener('click', async () => {
+        try {
+            const endDate = new Date();     
+            const startDate = new Date(0);   
+            const data = await fetchDataFromDB({
                 startDate: startDate.toISOString(),
                 endDate: endDate.toISOString(),
                 columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
-                }).then(data => {
-                    temperatureChart = createChart(data,     'Temperature (°C)', testDataset, 'testSlider', temperatureChart);
-                    temperatureChart2 = createChart(data,     'Temperature (°C)', testDataset, 'testSlider2', temperatureChart2);
                 });
-            }
+                displayDataOnPage(data);
+            } catch (error) {
+            console.error('Error fetching all data:', error);
+        }
+    });
+    
+    function displayDataOnPage(data) {
+        fetchedData = data; // save globaly
+        const tableBody = document.getElementById('data-table').querySelector('tbody');
+        tableBody.innerHTML = ''; // clear table
 
-            slider.addEventListener('input', function() {
-                daysValue.textContent = `${this.value} days`;
-                updateCharts();
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.timestamp}</td>
+                <td>${row.air_temperature}</td>
+                <td>${row.soil_temperature}</td>
+                <td>${row.air_humidity}</td>
+                <td>${row.soil_moisture}</td>
+                <td>${row.solar_intensity}</td>
+                <td>${row.pressure}</td>
+                <td>${row.AQI}</td>
+                <td>${row.TVOC}</td>
+                <td>${row.CO2}</td>
+                <td>${row.wind_speed}</td>
+                <td>${row.particles_2_5u}</td>
+                <td>${row.particles_5u}</td>
+                <td>${row.particles_10u}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    function downloadFile(data, fileName, fileType) {
+        const blob = new Blob([data], { type: fileType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('download-json').addEventListener('click', () => {
+        if (fetchedData && fetchedData.length > 0) {
+            downloadFile(JSON.stringify(fetchedData, null, 2), 'data.json', 'application/json');
+        } else {
+            alert('No data to download. Fetch some data first.');
+        }
+    });
+    
+    document.getElementById('download-csv').addEventListener('click', () => {
+        if (fetchedData && fetchedData.length > 0) {
+            const headers = Object.keys(fetchedData[0]).join(',');
+            const rows = fetchedData.map(row => {
+                return Object.values(row).join(',');
             });
-        
-
-            const resizeHints = document.querySelectorAll('.resize-hint');
-            resizeHints.forEach((resizeHint) => {
-                resizeHint.addEventListener('click', function(event) {
-                    const chartBox = this.closest('.chart-box');
-                    toggleChartSize(chartBox); 
-                });
-            });
-            
-            function toggleChartSize(chartBox) {
-                chartBox.classList.toggle('chart-box-full');
-                const hintElement = chartBox.querySelector('.resize-hint');
-                if (chartBox.classList.contains('chart-box-full')) {
-                    hintElement.textContent = 'Click to shrink';
-                } else {
-                    hintElement.textContent = 'Click to enlarge';
-                }
-            }
-
-            updateCharts();
-        </script>
-    </main>
-</body>
+            const csvData = [headers, ...rows].join('\n');
+            downloadFile(csvData, 'data.csv', 'text/csv');
+        } else {
+            alert('No data to download. Fetch some data first.');
+        }
+    });
+</script>
 </html>
