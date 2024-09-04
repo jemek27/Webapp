@@ -101,27 +101,27 @@ app.get('/data', async (req, res) => {
     const { startDate, endDate, columns } = req.query;
   
     try {
-      let query = 'SELECT * FROM environmental_data';
-      const queryParams = [];
+        let query = 'SELECT * FROM environmental_data';
+        const queryParams = [];
   
-      if (startDate && endDate) {
-        queryParams.push(startDate, endDate);
-        query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
-      }
+        if (startDate && endDate) {
+          queryParams.push(startDate, endDate);
+          query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
+        }
   
-      // Add column filtering to the query
-      if (columns) {
-        const columnsArray = columns.split(',');
-        query = query.replace('*', columnsArray.join(', '));
-      }
+        // Add column filtering to the query
+        if (columns) {
+          const columnsArray = columns.split(',');
+          query = query.replace('*', columnsArray.join(', '));
+        }
 
-      query += ' ORDER BY timestamp ASC';
+        query += ' ORDER BY timestamp ASC';
   
-      const result = await pool.query(query, queryParams);
-      res.json(result.rows);
+        const result = await pool.query(query, queryParams);
+        res.json(result.rows);
     } catch (error) {
-      console.error('Error querying the database:', error);
-      res.status(500).json({ message: 'Error querying the database' });
+        console.error('Error querying the database:', error);
+        res.status(500).json({ message: 'Error querying the database' });
     }
   });
 
