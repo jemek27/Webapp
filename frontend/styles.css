@@ -41,8 +41,7 @@ main {
     padding: 30px;
     background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    max-width: 1200px;  
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
     width: fit-content; 
     /* position: relative;
     right: 25%; */
@@ -152,7 +151,7 @@ button:hover {
 .form-group {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+
 }
 
 #startDateLabel,
@@ -276,7 +275,140 @@ button:hover {
 .chart-box-full:hover .resize-hint {
     display: block;
 }
+.body-with-sidebar {
+    gap: 15px;
+    display: flex;
+    margin: 0;
+}
+
+/* Stylizacja kontenera z listą wyboru */
+.sidebar {
+    position: sticky;
+    width: 200px;
+    height: fit-content;
+    padding: 15px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-top: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Łączenie granic komórek */
+    margin-bottom: 20px;
+}
+
+th {
+    background-color: #222222;
+    color: white;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+/* Styl checkboxów w liście */
+.checkbox-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+input[type=checkbox]{
+  /* -ms-transform: scale(1); 
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1); 
+  -o-transform: scale(1); 
+  transform: scale(1); */
+  padding: 10px;
+}
+
+.checkbox-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.checkbox-list input {
+    margin-right: 10px; /* Odstęp między checkboxem a tekstem */
+    appearance: none; /* Ukrycie domyślnego stylu checkboxa */
+    width: 5px;
+    height: 5px;
+    border: 2px solid #222222;
+    border-radius: 4px;
+    background-color: #f1f0f0;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: background-color 0.3s, border-color 0.3s;
+    display: inline-block; 
+    vertical-align: middle; 
+}
+
+.checkbox-list input:checked {
+    background-color: #222222;
+    border-color: #444444;
+}
+
+/* Ikona zaznaczenia */
+.checkbox-list input:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;    
+    background-color: #f0f0f0;
+    border-radius: 2px;
+}
+
+/*  hover effect */
+.checkbox-list input:hover {
+    background-color: #dddddd;
+    border-color: #cccccc;
+}
+
+.checkbox-list label {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
 /* **Media Queries** */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+}
 @media (max-width: 1000px) {
     .chart-box {
         width: 90%; 

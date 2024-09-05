@@ -10,56 +10,140 @@
     <script src="../scripts/create_chart.js"></script>  
 </head>
 <style>
-    /* Ogólne style dla tabeli */
-table {
-    width: 100%; /* Szerokość tabeli na pełną szerokość kontenera */
-    border-collapse: collapse; /* Łączenie granic komórek */
-    margin-bottom: 20px; /* Odstęp poniżej tabeli */
-}
-
-/* Stylowanie nagłówków tabeli */
-th {
-    background-color: #222222; /* Tło nagłówka */
-    color: white; /* Kolor tekstu nagłówka */
-    padding: 12px 8px; /* Odstępy wewnątrz komórek nagłówka */
-    text-align: left; /* Wyrównanie tekstu w nagłówku */
-    font-weight: bold; /* Pogrubienie tekstu nagłówka */
-    border-bottom: 2px solid #ddd; /* Linia pod nagłówkiem */
-}
-
-/* Stylowanie wierszy i komórek tabeli */
-td {
-    padding: 10px 8px; /* Odstępy wewnątrz komórek danych */
-    border-bottom: 1px solid #ddd; /* Linia pod komórkami */
-}
-
-/* Stylowanie dla nieparzystych wierszy (przeplatane kolory) */
-tr:nth-child(odd) {
-    background-color: #f2f2f2; /* Tło dla nieparzystych wierszy */
-}
-
-/* Stylowanie dla parzystych wierszy */
-tr:nth-child(even) {
-    background-color: #ffffff; /* Tło dla parzystych wierszy */
-}
-
-/* Stylizacja wiersza na hover */
-tr:hover {
-    background-color: #ddd; /* Zmiana tła na hover */
-}
-
-/* Stylizacja dla całej tabeli w mniejszych ekranach */
-@media (max-width: 768px) {
-    table {
-        font-size: 14px; /* Zmniejsz tekst na mniejszych ekranach */
+    .body-with-sidebar {
+        gap: 15px;
+        display: flex;
+        margin: 0;
     }
-}
 
-/* Stylowanie obramowania */
-table, th, td {
-    border: 1px solid #ddd; /* Dodanie cienkiego obramowania */
-}
-</style>
+    /* Stylizacja kontenera z listą wyboru */
+    .sidebar {
+        position: sticky;
+        width: 200px;
+        height: fit-content;
+        padding: 15px;
+        background-color: #ffffff;
+        border-right: 1px solid #ddd;
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        margin-top: 40px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .content {
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse; /* Łączenie granic komórek */
+        margin-bottom: 20px;
+    }
+
+    th {
+        background-color: #222222;
+        color: white;
+        padding: 12px 8px;
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid #ddd;
+    }
+
+    td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    /* Styl checkboxów w liście */
+    .checkbox-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    input[type=checkbox]{
+      /* -ms-transform: scale(1); 
+      -moz-transform: scale(1);
+      -webkit-transform: scale(1); 
+      -o-transform: scale(1); 
+      transform: scale(1); */
+      padding: 10px;
+    }
+
+    .checkbox-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .checkbox-list input {
+        margin-right: 10px; /* Odstęp między checkboxem a tekstem */
+        appearance: none; /* Ukrycie domyślnego stylu checkboxa */
+        width: 5px;
+        height: 5px;
+        border: 2px solid #222222;
+        border-radius: 4px;
+        background-color: #f1f0f0;
+        cursor: pointer;
+        position: relative;
+        outline: none;
+        transition: background-color 0.3s, border-color 0.3s;
+        display: inline-block; 
+        vertical-align: middle; 
+    }
+
+    .checkbox-list input:checked {
+        background-color: #222222;
+        border-color: #444444;
+    }
+
+    /* Ikona zaznaczenia */
+    .checkbox-list input:checked::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;    
+        background-color: #f0f0f0;
+        border-radius: 2px;
+    }
+
+    /* Efekt hover */
+    .checkbox-list input:hover {
+        background-color: #dddddd;
+        border-color: #cccccc;
+    }
+    
+    .checkbox-list label {
+        font-size: 16px;
+        color: #333;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        table {
+            font-size: 14px;
+        }
+    }
+    </style>
 <body>
     <header>    
         <nav>
@@ -71,79 +155,137 @@ table, th, td {
             </ul>
         </nav>
     </header>
-    <div class="main-content">
-        <div class="button-bar search-and-date-container"> 
-            <button id="fetch-all-data">Fetch all data</button>
-            <button id="download-json">Download JSON</button>
-            <button id="download-csv">Download CSV</button>
+
+    <div class="body-with-sidebar">
+        <div class="sidebar">
+            <h3>Select Data Fields</h3>
+            <ul class="checkbox-list">
+                <li><input type="checkbox" id="select-all">Select All</li>
+                <li><input type="checkbox" value="air_temperature">Air Temperature (°C)</li>
+                <li><input type="checkbox" value="soil_temperature">Soil Temperature (°C)</li>
+                <li><input type="checkbox" value="air_humidity">Air Humidity (%)</li>
+                <li><input type="checkbox" value="soil_moisture">Soil Moisture (%)</li>
+                <li><input type="checkbox" value="solar_intensity">Solar Intensity (W/m²)</li>
+                <li><input type="checkbox" value="pressure">Pressure (hPa)</li>
+                <li><input type="checkbox" value="AQI">AQI</li>
+                <li><input type="checkbox" value="TVOC">TVOC (ppb)</li>
+                <li><input type="checkbox" value="CO2">CO2 (ppm)</li>
+                <li><input type="checkbox" value="wind_speed">Wind Speed (m/s)</li>
+                <li><input type="checkbox" value="particles_2_5u">Particles 2.5μm</li>
+                <li><input type="checkbox" value="particles_5u">Particles 5μm</li>
+                <li><input type="checkbox" value="particles_10u">Particles 10μm</li>
+            </ul>
         </div>
-        <main>
-            <!-- Tabela do wyświetlania danych -->
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Air Temperature (°C)</th>
-                        <th>Soil Temperature (°C)</th>
-                        <th>Air Humidity (%)</th>
-                        <th>Soil Moisture (%)</th>
-                        <th>Solar Intensity (W/m²)</th>
-                        <th>Pressure (hPa)</th>
-                        <th>AQI</th>
-                        <th>TVOC (ppb)</th>
-                        <th>CO2 (ppm)</th>
-                        <th>Wind Speed (m/s)</th>
-                        <th>Particles 2.5μm</th>
-                        <th>Particles 5μm</th>
-                        <th>Particles 10μm</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </main>
+
+        <div class="content">
+            <div class="body-with-sidebar">
+                <div class="button-bar search-and-date-container">
+                    <div class="form-group">
+                        <label id="startDateLabel" for="startDate">Start Date:</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="endDateLabel" for="endDate">End Date:</label>
+                        <input type="date" id="endDate">
+                    </div>   
+                </div>
+                <div class="button-bar search-and-date-container"> 
+                    <button id="fetch-all-data">Fetch selected data</button>
+                    <button id="download-json">Download JSON</button>
+                    <button id="download-csv">Download CSV</button>
+                </div>
+            </div>
+
+            <main>
+                <!-- Tabela do wyświetlania danych -->
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <!-- Dynamically generated column headers based on selected data -->.
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </main>
+        </div>
     </div>
 </body>
+
 <script>     
-    let fetchedData = []; 
+    let fetchedData = [];
+    let selectedColumns = [];
+    
+    const checkboxes = document.querySelectorAll('.checkbox-list input[type=checkbox]');
+    const selectAllCheckbox = document.getElementById('select-all');
+    
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+
+    selectAllCheckbox.addEventListener('change', () => {
+        const isChecked = selectAllCheckbox.checked;
+        checkboxes.forEach(checkbox => {
+            if (checkbox !== selectAllCheckbox) {
+                checkbox.checked = isChecked;
+            }
+        });
+    });
+
+    // Update selected columns based on checked boxes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            selectedColumns = ['timestamp']; // reset and add timestamp
+            checkboxes.forEach(box => {
+                if (box.checked && box !== selectAllCheckbox) {
+                    selectedColumns.push(box.value);
+                }
+            });
+        });
+    });
 
     document.getElementById('fetch-all-data').addEventListener('click', async () => {
-        try {
-            const endDate = new Date();     
-            const startDate = new Date(0);   
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        start = startDate ? new Date(startDate) : new Date(0);
+        end = endDate ? new Date(endDate) : new Date();
+        end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
+
+        try {  
             const data = await fetchDataFromDB({
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
-                columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
-                });
-                displayDataOnPage(data);
-            } catch (error) {
+                startDate: start.toISOString(),
+                endDate: end.toISOString(),
+                columns: selectedColumns
+            });
+            displayDataOnPage(data);
+        } catch (error) {
             console.error('Error fetching all data:', error);
         }
     });
-    
-    function displayDataOnPage(data) {
-        fetchedData = data; // save globaly
-        const tableBody = document.getElementById('data-table').querySelector('tbody');
-        tableBody.innerHTML = ''; // clear table
 
+    function displayDataOnPage(data) {
+        fetchedData = data;
+        const tableBody = document.getElementById('data-table').querySelector('tbody');
+        const tableHead = document.getElementById('data-table').querySelector('thead');
+        
+        // Clear previous data
+        tableBody.innerHTML = '';
+        tableHead.innerHTML = '<tr><th>Timestamp</th></tr>';
+
+        // Dynamically add table headers based on selected columns
+        selectedColumns.slice(1).forEach(column => {
+            const th = document.createElement('th');
+            th.textContent = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            tableHead.querySelector('tr').appendChild(th);
+        });
+
+        // Populate table rows
         data.forEach(row => {
             const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.timestamp}</td>
-                <td>${row.air_temperature}</td>
-                <td>${row.soil_temperature}</td>
-                <td>${row.air_humidity}</td>
-                <td>${row.soil_moisture}</td>
-                <td>${row.solar_intensity}</td>
-                <td>${row.pressure}</td>
-                <td>${row.AQI}</td>
-                <td>${row.TVOC}</td>
-                <td>${row.CO2}</td>
-                <td>${row.wind_speed}</td>
-                <td>${row.particles_2_5u}</td>
-                <td>${row.particles_5u}</td>
-                <td>${row.particles_10u}</td>
-            `;
+            let rowHTML = `<td>${row.timestamp}</td>`;
+            selectedColumns.slice(1).forEach(column => {
+                rowHTML += `<td>${row[column]}</td>`;
+            });
+            tr.innerHTML = rowHTML;
             tableBody.appendChild(tr);
         });
     }
@@ -165,13 +307,13 @@ table, th, td {
             alert('No data to download. Fetch some data first.');
         }
     });
-    
+
     document.getElementById('download-csv').addEventListener('click', () => {
         if (fetchedData && fetchedData.length > 0) {
-            const headers = Object.keys(fetchedData[0]).join(',');
+            const headers = selectedColumns.join(',');
             const rows = fetchedData.map(row => {
-                return Object.values(row).join(',');
-            });
+            return selectedColumns.map(col => row[col] ?? '').join(',');
+        });
             const csvData = [headers, ...rows].join('\n');
             downloadFile(csvData, 'data.csv', 'text/csv');
         } else {

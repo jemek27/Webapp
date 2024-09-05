@@ -14,22 +14,25 @@
             <ul class="nav-list">
                 <li class="nav-item"><a href="../index.html">Home</a></li>
                 <li class="nav-item"><a href="Detailed_charts.html">Detailed charts</a></li>
-                <li class="nav-item"><a href="Control.html">Control</a></li>
+                <li class="nav-item"><a href="Control.html">Controls</a></li>
+                <li class="nav-item"><a href="Download_data.html">Download data</a></li>
             </ul>
         </nav>
-        <h1>Control</h1>
+        <h1>Controls</h1>
     </header>
-    <main>
-        <h2>Set signal send intervals</h2>
-        <p><input id="signalIntervalsTime" type="text" placeholder="Enter interval time >10min"></p>
-        <p id="currentSignalIntervalsTime"></p>
-        <p id="intervalErrorMessage" style="color: red;"></p>
-        <br>
-        <h2>Send reset signal</h2>
-        <button onclick="toggleResetText()">Request reset</button>
-        
-        <p id="resetText" style="display: none;">Reset is requested</p>
-    </main> 
+    <div class="main-content">
+        <main>
+            <h2>Set signal send intervals</h2>
+            <p><input id="signalIntervalsTime" type="text" placeholder="Enter interval time >10min"></p>
+            <p id="currentSignalIntervalsTime"></p>
+            <p id="intervalErrorMessage" style="color: red;"></p>
+            <br>
+            <h2>Send reset signal</h2>
+            <button onclick="toggleResetText()">Request reset</button>
+            
+            <p id="resetText" style="display: none;">Reset is requested</p>
+        </main> 
+    </div>
 
 </body>
 </html>

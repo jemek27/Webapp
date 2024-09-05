@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoRa Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../scripts/data_fetch.js"></script>
+</head>
+<body>
+    <header>    
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../index.html">Home</a></li>
+                <li class="nav-item"><a href="Detailed_charts.html">Detailed charts</a></li>
+                <li class="nav-item"><a href="Control.html">Controls</a></li>
+                <li class="nav-item"><a href="Download_data.html">Download data</a></li>
+            </ul>
+        </nav>
+        <h1>Download data</h1>
+    </header>
+
+    <div class="body-with-sidebar">
+        <div class="sidebar">
+            <h3>Select Data Fields</h3>
+            <ul class="checkbox-list">
+                <li><input type="checkbox" id="select-all">Select All</li>
+                <li><input type="checkbox" value="air_temperature">Air Temperature (°C)</li>
+                <li><input type="checkbox" value="soil_temperature">Soil Temperature (°C)</li>
+                <li><input type="checkbox" value="air_humidity">Air Humidity (%)</li>
+                <li><input type="checkbox" value="soil_moisture">Soil Moisture (%)</li>
+                <li><input type="checkbox" value="solar_intensity">Solar Intensity (W/m²)</li>
+                <li><input type="checkbox" value="pressure">Pressure (hPa)</li>
+                <li><input type="checkbox" value="AQI">AQI</li>
+                <li><input type="checkbox" value="TVOC">TVOC (ppb)</li>
+                <li><input type="checkbox" value="CO2">CO2 (ppm)</li>
+                <li><input type="checkbox" value="wind_speed">Wind Speed (m/s)</li>
+                <li><input type="checkbox" value="particles_2_5u">Particles 2.5μm</li>
+                <li><input type="checkbox" value="particles_5u">Particles 5μm</li>
+                <li><input type="checkbox" value="particles_10u">Particles 10μm</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div class="body-with-sidebar">
+                <div class="button-bar search-and-date-container">
+                    <div class="form-group">
+                        <label id="startDateLabel" for="startDate">Start Date:</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="endDateLabel" for="endDate">End Date:</label>
+                        <input type="date" id="endDate">
+                    </div>   
+                </div>
+                <div class="button-bar search-and-date-container"> 
+                    <button id="fetch-all-data">Fetch selected data</button>
+                    <button id="download-json">Download JSON</button>
+                    <button id="download-csv">Download CSV</button>
+                </div>
+            </div>
+
+            <main>
+                <h2>Data Table</h2>
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <!-- Dynamically generated column headers based on selected data -->.
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </main>
+        </div>
+    </div>
+</body>
+
+<script src="../scripts/download_data.js"></script>
+</html>
