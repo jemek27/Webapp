@@ -110,9 +110,16 @@ app.get('/data', async (req, res) => {
         }
   
         // Add column filtering to the query
+        const allowedColumns = [    'timestamp', 'air_temperature', 'soil_temperature', 'air_humidity',
+                                    'soil_moisture', 'solar_intensity', 'pressure', 'aqi', 'tvoc', 'co2', 
+                                    'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']; 
         if (columns) {
-          const columnsArray = columns.split(',');
-          query = query.replace('*', columnsArray.join(', '));
+          const columnsArray = columns.split(',').map(col => col.trim());
+          if (columnsArray.every(col => allowedColumns.includes(col))) {
+            query = query.replace('*', columnsArray.join(', '));
+          } else {
+            throw new Error('Invalid column name');
+          }
         }
 
         query += ' ORDER BY timestamp ASC';
@@ -123,7 +130,7 @@ app.get('/data', async (req, res) => {
         console.error('Error querying the database:', error);
         res.status(500).json({ message: 'Error querying the database' });
     }
-  });
+});
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
