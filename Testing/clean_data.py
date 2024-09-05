@@ -4,22 +4,40 @@ import psycopg2
 conn = psycopg2.connect("dbname=loraproject user=admin password=admin host=localhost")
 cur = conn.cursor()
 
-# Pobranie nazw kolumn z tabeli
-cur.execute("""
-    SELECT column_name 
-    FROM information_schema.columns 
-    WHERE table_name = 'environmental_data'
-""")
-columns = [row[0] for row in cur.fetchall() if row[0] not in ('id', 'timestamp')]
 
+query = """
+SELECT * FROM environmental_data WHERE timestamp = '2024-08-29T14:40:04.000Z'
+"""
 
-for column in columns:
-    query = f"""
+queryU = f"""
         UPDATE environmental_data
-        SET {column} = NULL
-        WHERE {column} = 0;
+        SET solar_intensity = NULL
+        WHERE solar_intensity = 54612.5;
+
     """
-    cur.execute(query)
+cur.execute(queryU)
+cur.execute(query)
+
+rows = cur.fetchall()
+for row in rows:
+    print(row)
+    
+
+# # Pobranie nazw kolumn z tabeli
+# cur.execute("""
+#     SELECT column_name 
+#     FROM information_schema.columns 
+#     WHERE table_name = 'environmental_data'
+# """)
+# columns = [row[0] for row in cur.fetchall() if row[0] not in ('id', 'timestamp')]
+
+# for column in columns:
+#     query = f"""
+#         UPDATE environmental_data
+#         SET {column} = NULL
+#         WHERE {column} = 0;
+#     """
+#     cur.execute(query)
 
 # query = f"""
 #     DELETE FROM environmental_data
