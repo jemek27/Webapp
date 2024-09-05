@@ -105,8 +105,8 @@ app.get('/data', async (req, res) => {
         const queryParams = [];
   
         if (startDate && endDate) {
-          queryParams.push(startDate, endDate);
-          query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
+            queryParams.push(startDate, endDate);
+            query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
         }
   
         // Add column filtering to the query
@@ -114,12 +114,12 @@ app.get('/data', async (req, res) => {
                                     'soil_moisture', 'solar_intensity', 'pressure', 'aqi', 'tvoc', 'co2', 
                                     'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']; 
         if (columns) {
-          const columnsArray = columns.split(',').map(col => col.trim());
-          if (columnsArray.every(col => allowedColumns.includes(col))) {
-            query = query.replace('*', columnsArray.join(', '));
-          } else {
-            throw new Error('Invalid column name');
-          }
+            const columnsArray = columns.split(',').map(col => col.trim());
+            if (columnsArray.every(col => allowedColumns.includes(col))) {
+                query = query.replace('*', columnsArray.join(', '));
+            } else {
+                throw new Error('Invalid column name');
+            }
         }
 
         query += ' ORDER BY timestamp ASC';
