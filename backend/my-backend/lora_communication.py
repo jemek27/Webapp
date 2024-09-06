@@ -12,6 +12,10 @@ from dotenv import load_dotenv
 import signal
 import sys
 
+TIME_AFTER_RESET = 15
+TIME_BETWEEN_COMMENDS = 1
+NUM_OF_DATA = 10
+
 load_dotenv() 
 
 conn = psycopg2.connect(
@@ -37,9 +41,6 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
 
-TIME_AFTER_RESET = 15
-TIME_BETWEEN_COMMENDS = 1
-NUM_OF_DATA = 10
 
 
 commandsInit = [
@@ -205,6 +206,27 @@ def insert_data(data):
         print(f"Error inserting data: {e}")
         conn.rollback()
 
+
+
+def insert_device_data(data):
+    try:
+        for i in range(len(data['timestamps'])):
+            cur.execute(
+                sql.SQL("INSERT INTO environmental_data (timestamps, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
+                (
+                    data['timestamps'][i],
+                    data['solar_current'][i] if i < len(data['air_temperature']) else None,
+                    data['solar_voltage'][i] if i < len(data['soil_temperature']) else None,
+                    data['state_of_charge'][i] if i < len(data['air_humidity']) else None,
+                    data['battery_age'][i]if i < len(data['soil_moisture']) else None,         
+                )
+            )
+        conn.commit()
+        print("Device data was saved")
+    except Exception as e:
+        print(f"Error inserting device data: {e}")
+        conn.rollback()
+
 def menageDataDb(dataStrings):
     print('mmmmmm data')
     floatList = [float(item) for item in dataStrings if item.strip()]
@@ -223,31 +245,34 @@ def menageDataDb(dataStrings):
         "wind_speed": [],
         "particles_2.5u": [],
         "particles_5u": [], 
-        "particles_10u": []
+        "particles_10u": [],
+        "solar_current": [],
+        "solar_voltage": [],
+        "state_of_charge": [],
+        "battery_age": []
     }
-    dataLabels = [              
-        "air_temperature",
-        "air_humidity",
-        "pressure",
-        "solar_intensity",
-        "AQI",
-        "TVOC",
-        "CO2",
-        "soil_moisture",
-        "wind_speed",
-        "soil_temperature",
-        "particles_2.5u",
-        "particles_5u", 
-        "particles_10u"
+    dataLabels = ["air_temperature", "air_humidity", "pressure", "solar_intensity", 
+                  "AQI", "TVOC", "CO2", "soil_moisture", "solar_current", "solar_voltage", 
+                  "particles_2.5u", "particles_5u",  "particles_10u" "state_of_charge", "battery_age", 
+                  "soil_temperature", "wind_speed",
     ]
+
     data['timestamps'].append(datetime.now().isoformat(timespec='seconds'))
     for i in range(len(floatList)):
         data[dataLabels[i]].append(floatList[i])
 
-    insert_data(data)
+    dataE = {key: data[key] for key in [ 
+        "timestamps", "air_temperature", "soil_temperature", "air_humidity", 
+        "soil_moisture", "solar_intensity", "pressure", "AQI", "TVOC", "CO2", "wind_speed", 
+        "particles_2.5u", "particles_5u",  "particles_10u"
+    ]}
 
+    dataC = {key: data[key] for key in [
+        "timestamps", "solar_current", "solar_voltage", "state_of_charge", "battery_age"
+    ]}
 
-
+    insert_data(dataE)
+    insert_device_data(dataC)
 
 def processResponse(response):
     readingData = True
