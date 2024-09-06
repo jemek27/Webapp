@@ -6,13 +6,13 @@ cur = conn.cursor()
 
 
 query = """
-SELECT * FROM environmental_data WHERE timestamp = '2024-08-29T14:40:04.000Z'
+SELECT soil_moisture FROM environmental_data WHERE timestamp < '2024-09-06T08:59:13.000Z'
 """
 
 queryU = f"""
         UPDATE environmental_data
-        SET solar_intensity = NULL
-        WHERE solar_intensity = 54612.5;
+        SET soil_moisture = NULL
+        WHERE timestamp < '2024-09-06T08:59:13.000Z';
 
     """
 cur.execute(queryU)

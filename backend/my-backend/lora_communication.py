@@ -7,17 +7,19 @@ from datetime import datetime
 import psycopg2
 from psycopg2 import sql
 import psycopg2.extras
+from dotenv import load_dotenv
 
 import signal
 import sys
 
+load_dotenv() 
 
 conn = psycopg2.connect(
-    dbname="loraproject",
-    user="admin",
-    password="admin",
-    host="localhost",
-    port="5432"
+    user=os.getenv('DB_USER'),
+    host=os.getenv('DB_HOST'),
+    database=os.getenv('DB_DATABASE'),
+    password=os.getenv('DB_PASSWORD'),
+    port=os.getenv('DB_PORT')
 )
 cur = conn.cursor()
 

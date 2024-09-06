@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchDataFromDB({
             startDate: startDate.toISOString(),
             endDate: endDate.toISOString(),
-            columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'AQI', 'TVOC', 'CO2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
+            columns: ['timestamp', 'air_temperature', 'soil_temperature', 'air_humidity', 'soil_moisture', 'solar_intensity', 'pressure', 'aqi', 'tvoc', 'co2', 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']
         }).then(data => {
             temperatureChart = createChart(data,     'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
             humidityChart = createChart(data,        'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
