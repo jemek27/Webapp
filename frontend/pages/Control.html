@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoRa Data Visualization</title>
     <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../scripts/data_fetch.js" defer></script>
     <script src="../scripts/control_panel.js" defer></script>
 </head>
@@ -32,7 +33,35 @@
             
             <p id="resetText" style="display: none;">Reset is requested</p>
         </main> 
-    </div>
 
+        <main>
+            <h2>Device Data</h2>
+            <div class="battery-info">
+                <h3 id="battery-status"></h3>
+                <h3 id="battery-age"></h3>
+            </div>
+            <div class="chart-container">
+                <div class="chart-box">
+                    <h2>Solar Current</h2>
+                    <canvas id="solarIChart" width="400" height="200"></canvas>
+                    <div class="resize-hint">Click on bottom to enlarge</div>
+                </div>
+
+                <div class="chart-box">
+                    <h2>Solar Voltage</h2>
+                    <canvas id="solarVChart" width="400" height="200"></canvas>
+                    <div class="resize-hint">Click on bottom to enlarge</div>
+                </div>
+
+                <div class="chart-box">
+                    <h2>State of Charge</h2>
+                    <canvas id="chargeChart" width="400" height="200"></canvas>
+                    <div class="resize-hint">Click on bottom to enlarge</div>
+                </div>
+            </div>
+        </main> 
+    </div>
+    <script src="../scripts/create_chart.js"></script>
+    <script src="../scripts/controls_data.js"></script>
 </body>
 </html>

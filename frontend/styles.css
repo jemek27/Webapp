@@ -134,6 +134,21 @@ button:hover {
     margin: 0 auto; 
 }
 
+/* **Styl dla informacji o baterii** */
+
+.battery-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+.battery-info h3 {
+    margin: 0 15px;
+    font-size: 1.6em;
+    color: #555555; 
+}
+
 /* **Formularze w Głównej Zawartości** */
 
 .search-and-date-container {
@@ -151,7 +166,6 @@ button:hover {
 .form-group {
     display: flex;
     align-items: center;
-
 }
 
 #startDateLabel,

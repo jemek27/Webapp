@@ -98,21 +98,27 @@ app.get('/settings', (req, res) => {
 });
 
 app.get('/data', async (req, res) => {
-    const { startDate, endDate, columns } = req.query;
-  
+    const { startDate, endDate, columns, tableName } = req.query;
+
     try {
-        let query = 'SELECT * FROM environmental_data';
+        
+        const allowedTables = ['environmental_data', 'device_data'];
+        if (!tableName || !allowedTables.includes(tableName)) {
+            throw new Error('Invalid table name');
+        }
+
+        let query = `SELECT * FROM ${tableName}`;
         const queryParams = [];
-  
+
         if (startDate && endDate) {
-            queryParams.push(startDate, endDate);
+            queryParams.push(startDateUTC, endDateUTC);
             query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
         }
-  
-        // Add column filtering to the query
-        const allowedColumns = [    'timestamp', 'air_temperature', 'soil_temperature', 'air_humidity',
-                                    'soil_moisture', 'solar_intensity', 'pressure', 'aqi', 'tvoc', 'co2', 
-                                    'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u']; 
+
+        const allowedColumns = [ 'timestamp', 'air_temperature', 'soil_temperature', 'air_humidity',
+                                 'soil_moisture', 'solar_intensity', 'pressure', 'aqi', 'tvoc', 'co2',
+                                 'wind_speed', 'particles_2_5u', 'particles_5u', 'particles_10u',
+                                 'solar_current', 'solar_voltage', 'state_of_charge', 'battery_age']; 
         if (columns) {
             const columnsArray = columns.split(',').map(col => col.trim());
             if (columnsArray.every(col => allowedColumns.includes(col))) {
@@ -123,7 +129,7 @@ app.get('/data', async (req, res) => {
         }
 
         query += ' ORDER BY timestamp ASC';
-  
+
         const result = await pool.query(query, queryParams);
         res.json(result.rows);
     } catch (error) {

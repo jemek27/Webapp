@@ -14,7 +14,7 @@ import sys
 
 TIME_AFTER_RESET = 15 # this has to be the same val as in the board memory 
 TIME_BETWEEN_COMMENDS = 1
-NUM_OF_DATA = 17
+NUM_OF_DATA = 10
 
 load_dotenv() 
 
@@ -165,13 +165,13 @@ def insert_device_data(data):
     try:
         for i in range(len(data['timestamps'])):
             cur.execute(
-                sql.SQL("INSERT INTO device_data (timestamps, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
+                sql.SQL("INSERT INTO device_data (timestamp, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
                 (
                     data['timestamps'][i],
-                    data['solar_current'][i] if i < len(data['air_temperature']) else None,
-                    data['solar_voltage'][i] if i < len(data['soil_temperature']) else None,
-                    data['state_of_charge'][i] if i < len(data['air_humidity']) else None,
-                    data['battery_age'][i]if i < len(data['soil_moisture']) else None,         
+                    data['solar_current'][i] if i < len(data['solar_current']) else None,
+                    data['solar_voltage'][i] if i < len(data['solar_voltage']) else None,
+                    data['state_of_charge'][i] if i < len(data['state_of_charge']) else None,
+                    data['battery_age'][i]if i < len(data['battery_age']) else None,         
                 )
             )
         conn.commit()
@@ -207,7 +207,7 @@ def menageDataDb(dataStrings):
     }
     dataLabels = ["air_temperature", "air_humidity", "pressure", "solar_intensity", 
                   "AQI", "TVOC", "CO2", "soil_moisture", "solar_current", "solar_voltage", 
-                  "particles_2.5u", "particles_5u",  "particles_10u" "state_of_charge", "battery_age", 
+                  "particles_2.5u", "particles_5u",  "particles_10u", "state_of_charge", "battery_age", 
                   "soil_temperature", "wind_speed",
     ]
 
@@ -224,7 +224,8 @@ def menageDataDb(dataStrings):
     dataC = {key: data[key] for key in [
         "timestamps", "solar_current", "solar_voltage", "state_of_charge", "battery_age"
     ]}
-
+    print(dataE)
+    print(dataC)
     insert_data(dataE)
     insert_device_data(dataC)
 
@@ -255,7 +256,7 @@ def processResponse(response):
             else:
                 dataStrings = asciiString.split(';')  
                 print(dataStrings)
-                if len(dataStrings) == NUM_OF_DATA + 1: # +1 for sleep time
+                if len(dataStrings) >= NUM_OF_DATA + 1: # +1 for sleep time
                     partedString = (dataStrings.pop()).split(' ')
 
                     readingData = controlSignals(settingsPath, partedString)              
