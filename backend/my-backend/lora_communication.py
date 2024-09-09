@@ -12,9 +12,9 @@ from dotenv import load_dotenv
 import signal
 import sys
 
-TIME_AFTER_RESET = 15
+TIME_AFTER_RESET = 15 # this has to be the same val as in the board memory 
 TIME_BETWEEN_COMMENDS = 1
-NUM_OF_DATA = 10
+NUM_OF_DATA = 17
 
 load_dotenv() 
 
@@ -118,7 +118,7 @@ def controlSignals(settingsPath, partedString):
         time.sleep(2)
         send(['RESET'])
         data["ResetRequest"] = 0  
-        data["SignalIntervals"] = TIME_AFTER_RESET
+        data["SignalIntervals"] = TIME_AFTER_RESET #TODO for testing left in second, in release add  * 60
         with open(settingsPath, 'w') as file:
             json.dump(data, file, indent=4)
     else:
@@ -130,52 +130,6 @@ def controlSignals(settingsPath, partedString):
                 time.sleep(2)
                 send([signalIntervals])
     return readingData
-
-# def menageData(dataPath, dataStrings):
-#     print('mmmmmm data')
-#     floatList = [float(item) for item in dataStrings if item.strip()]
-#     print(floatList) 
-#     if os.path.exists(dataPath):
-#         with open(dataPath, 'r') as file:
-#             data = json.load(file)
-#     else:
-#         data = {
-#             "timestamps": [],                  
-#             "air_temperature": [],
-#             "soil_temperature": [],
-#             "air_humidity": [],
-#             "soil_moisture": [],
-#             "solar_intensity": [],
-#             "pressure": [],
-#             "AQI": [],
-#             "TVOC": [],
-#             "CO2": [],
-#             "wind_speed": [],
-#             "particles_2.5u": [],
-#             "particles_5u": [], 
-#             "particles_10u": []
-#         }
-#     dataLabels = [              
-#         "air_temperature",
-#         "air_humidity",
-#         "pressure",
-#         "solar_intensity",
-#         "AQI",
-#         "TVOC",
-#         "CO2",
-#         "soil_moisture",
-#         "wind_speed",
-#         "soil_temperature",
-#         "particles_2.5u",
-#         "particles_5u", 
-#         "particles_10u"
-#     ]
-#     data['timestamps'].append(datetime.now().isoformat(timespec='seconds'))
-#     for i in range(len(floatList) - 1):
-#         data[dataLabels[i]].append(floatList[i])
-#     with open(dataPath, 'w') as file:
-#         json.dump(data, file, indent=4)
-#     print(f"Dane zostały zapisane do pliku {dataPath}.")
 
 
 def insert_data(data):
@@ -207,12 +161,11 @@ def insert_data(data):
         conn.rollback()
 
 
-
 def insert_device_data(data):
     try:
         for i in range(len(data['timestamps'])):
             cur.execute(
-                sql.SQL("INSERT INTO environmental_data (timestamps, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
+                sql.SQL("INSERT INTO device_data (timestamps, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
                 (
                     data['timestamps'][i],
                     data['solar_current'][i] if i < len(data['air_temperature']) else None,
@@ -226,6 +179,7 @@ def insert_device_data(data):
     except Exception as e:
         print(f"Error inserting device data: {e}")
         conn.rollback()
+
 
 def menageDataDb(dataStrings):
     print('mmmmmm data')
@@ -272,7 +226,15 @@ def menageDataDb(dataStrings):
     ]}
 
     insert_data(dataE)
-    # insert_device_data(dataC)
+    insert_device_data(dataC)
+
+def sleep(settingsPath):
+    with open(settingsPath, 'r') as file:
+        data = json.load(file)
+        signalIntervals = data.get("SignalIntervals")
+        print("SignalIntervals:", signalIntervals)
+        time.sleep(signalIntervals) #TODO for testing left in second, in release add  * 60
+
 
 def processResponse(response):
     readingData = True
@@ -287,14 +249,17 @@ def processResponse(response):
             asciiString = bytes.fromhex(extracted[0]).decode('utf-8')
             print(f"Translated: {asciiString}")
 
-            dataStrings = asciiString.split(';')  
-            print(dataStrings)
-            if len(dataStrings) == NUM_OF_DATA + 1: # +1 for sleep time
-                partedString = (dataStrings.pop()).split(' ')
-                
-                readingData = controlSignals(settingsPath, partedString)
-                # menageData(dataPath, dataStrings)                
-                menageDataDb(dataStrings)                
+            if asciiString == 'Sleep':
+                sleep(settingsPath)
+            else:
+                dataStrings = asciiString.split(';')  
+                print(dataStrings)
+                if len(dataStrings) == NUM_OF_DATA + 1: # +1 for sleep time
+                    partedString = (dataStrings.pop()).split(' ')
+
+                    readingData = controlSignals(settingsPath, partedString)              
+                    menageDataDb(dataStrings)  
+                        
         except ValueError: 
             print("Error: The provided string is not a valid hex string.")
 
@@ -306,7 +271,6 @@ initDevice()
 while running:
     readingData = True
     receive(readingData)
-    #TODO time of sensorSleep - something
 
 cur.close()
 conn.close()
