@@ -35,3 +35,7 @@ async function fetchDataFromDB({ startDate, endDate, columns }) {
 async function fetchDeviceDataFromDB({ startDate, endDate, columns }) { 
     return await fetchDataDB('http://localhost:3000/data', { startDate, endDate, columns, tableName: 'device_data'});
 } 
+
+async function fetchDeviceAndEnVData({ startDate, endDate, columns }) { 
+    return await fetchDataDB('http://localhost:3000/dataFromAllTables', { startDate, endDate, columns, tableName: ''});
+}

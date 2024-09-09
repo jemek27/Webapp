@@ -48,7 +48,8 @@ function createChart(data, yAxisName, datasets, canvasID, chartInstance) {
         data: data.map(item => item[dataset.dataKey]),
         borderColor: dataset.borderColor,
         backgroundColor: dataset.backgroundColor || 'rgba(0, 0, 0, 0.1)',
-        fill: dataset.fill || false
+        fill: dataset.fill || false,
+        tension: 0.2  // Wartość od 0 (prostokątne segmenty) do 1 (maksymalne wygładzanie)
     }));
     
     chartInstance = new Chart(ctx, {

@@ -1,58 +1,33 @@
     let fetchedData = [];
     let selectedColumns = [];
-    let selectedEnvironmentalColumns = [];
-    let selectedDeviceColumns = [];
-
-    const environmentalCheckboxes = document.querySelectorAll('#environmental-checkboxes input[type=checkbox]');
+  
+    const Checkboxes = document.querySelectorAll('.checkbox-list input[type=checkbox]');
     const selectAll = document.getElementById('select-all');
 
-    const deviceCheckboxes = document.querySelectorAll('#device-checkboxes input[type=checkbox]');
 
     // Uncheck all checkboxes on page load
-    environmentalCheckboxes.forEach(checkbox => checkbox.checked = false);
-    deviceCheckboxes.forEach(checkbox => checkbox.checked = false);
-
+    Checkboxes.forEach(checkbox => checkbox.checked = false);
 
     selectAll.addEventListener('change', () => {
         const isChecked = selectAll.checked;
-        environmentalCheckboxes.forEach(checkbox => {
+        Checkboxes.forEach(checkbox => {
             if (checkbox !== selectAll) {
                 checkbox.checked = isChecked;
             }
         });
-        updateSelectedEnvironmentalColumns();
-        deviceCheckboxes.forEach(checkbox => {
-            if (checkbox !== selectAll) {
-                checkbox.checked = isChecked;
-            }
-        });
-        updateSelectedDeviceColumns();
+        updateSelectedColumns();
     });
 
-    // Update selected environmental columns based on checked boxes
-    environmentalCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateSelectedEnvironmentalColumns);
+    // Update selected columns based on checked boxes
+    Checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedColumns);
     });
 
-    // Update selected device columns based on checked boxes
-    deviceCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateSelectedDeviceColumns);
-    });
-
-    function updateSelectedEnvironmentalColumns() {
-        selectedEnvironmentalColumns = ['timestamp']; // Reset and add timestamp
-        environmentalCheckboxes.forEach(box => {
+    function updateSelectedColumns() {
+        selectedColumns = ['timestamp']; // Reset and add timestamp
+        Checkboxes.forEach(box => {
             if (box.checked && box !== selectAll) {
-                selectedEnvironmentalColumns.push(box.value);
-            }
-        });
-    }
-
-    function updateSelectedDeviceColumns() {
-        selectedDeviceColumns = ['timestamp']; // Reset and add timestamp
-        deviceCheckboxes.forEach(box => {
-            if (box.checked && box !== selectAll) {
-                selectedDeviceColumns.push(box.value);
+                selectedColumns.push(box.value);
             }
         });
     }
@@ -65,80 +40,27 @@
         end.setDate(end.getDate() + 1); // Include the end date <start, end>
 
         try {
-            // Fetch environmental data
-            const dataEnv = await fetchDataFromDB({
+            const data = await fetchDeviceAndEnVData({
                 startDate: start.toISOString(),
                 endDate: end.toISOString(),
-                columns: selectedEnvironmentalColumns
+                columns: selectedColumns
             });
-
-            // Fetch device data
-            const dataDevice = await fetchDeviceDataFromDB({
-                startDate: start.toISOString(),
-                endDate: end.toISOString(),
-                columns: selectedDeviceColumns
-            });
-
             
-            const mergeData = mergeDataByTimestamp(dataEnv, dataDevice);
-
-            displayDataOnPage(mergeData);
+            displayDataOnPage(data);
 
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     });
 
-    function mergeDataByTimestamp(dataEnv, dataDevice) {
-        const mergedData = [];
-    
-        // Map environmental data by timestamp
-        const dataEnvMap = dataEnv.reduce((map, item) => {
-            map[item.timestamp] = item;
-            return map;
-        }, {});
-    
-        // Create a Set of unique timestamps from both datasets
-        const allTimestamps = new Set([...dataEnv.map(item => item.timestamp), ...dataDevice.map(item => item.timestamp)]);
-    
-        // Merge data by timestamp
-        allTimestamps.forEach(timestamp => {
-            const envRow = dataEnvMap[timestamp] || {}; // Environmental row or empty object if not present
-            const deviceRow = dataDevice.find(deviceRow => deviceRow.timestamp === timestamp) || {}; // Find corresponding device row
-    
-            // Merge rows, adding null for missing fields
-            const mergedRow = {};
-    
-            // Merge environmental data fields, assigning null for missing values
-            Object.keys(dataEnvMap[timestamp] || {}).forEach(key => {
-                mergedRow[key] = envRow[key] ?? null;
-            });
-    
-            // Merge device data fields, assigning null for missing values
-            Object.keys(deviceRow).forEach(key => {
-                mergedRow[key] = deviceRow[key] ?? null;
-            });
-    
-            mergedRow.timestamp = timestamp; // Ensure timestamp is added
-    
-            mergedData.push(mergedRow);
-        });
-    
-        return mergedData;
-    }
-
-
     function displayDataOnPage(data) {
         fetchedData = data;
         const tableBody = document.getElementById('data-table').querySelector('tbody');
         const tableHead = document.getElementById('data-table').querySelector('thead');
 
-        // Clear previous data
         tableBody.innerHTML = '';
         tableHead.innerHTML = '<tr><th>Timestamp</th></tr>';
-
-        // Dynamically add table headers based on selected columns
-        selectedColumns = [...selectedEnvironmentalColumns, ...selectedDeviceColumns].filter((v, i, a) => a.indexOf(v) === i); // Merge both columns and remove duplicates
+    
         selectedColumns.slice(1).forEach(column => {
             const th = document.createElement('th');
             th.textContent = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -157,14 +79,11 @@
         });
     }
 
-
-
     function formatDate(timestamp) {
         console.log(timestamp)
         const date = new Date(timestamp);
         return date.toISOString().slice(0, 10); // Zwraca format 'YYYY-MM-DD'
     }
-
 
     function getDateRange() {
         const timestamps = fetchedData.map(row => new Date(row.timestamp));
