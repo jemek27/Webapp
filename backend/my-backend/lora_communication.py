@@ -232,8 +232,9 @@ def sleep(settingsPath):
     with open(settingsPath, 'r') as file:
         data = json.load(file)
         signalIntervals = data.get("SignalIntervals")
-        print("SignalIntervals:", signalIntervals)
+        print("Going to sleep for:", signalIntervals)
         time.sleep(signalIntervals) #TODO for testing left in second, in release add  * 60
+        print("Up")
 
 
 def processResponse(response):
