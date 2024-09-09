@@ -272,7 +272,7 @@ def menageDataDb(dataStrings):
     ]}
 
     insert_data(dataE)
-    insert_device_data(dataC)
+    # insert_device_data(dataC)
 
 def processResponse(response):
     readingData = True
