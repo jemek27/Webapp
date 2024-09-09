@@ -28,10 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 solarVChart = createChart(data, 'Solar Voltage (V)', solarVDataset, 'solarVChart', solarVChart);
                 chargeChart = createChart(data, 'State of Charge (%)', chargeDataset, 'chargeChart', chargeChart);
 
-                console.log('Data:', data);
                 const latestRecord = data[data.length - 1];
-                console.log('Latest Record:', latestRecord);
-                
+
                 const batteryState = latestRecord.state_of_charge;
                 const batteryStatusElement = document.getElementById('battery-status');
                 const batteryStatusText = `Battery: ${batteryState}%`;
