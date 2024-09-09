@@ -111,7 +111,7 @@ app.get('/data', async (req, res) => {
         const queryParams = [];
 
         if (startDate && endDate) {
-            queryParams.push(startDateUTC, endDateUTC);
+            queryParams.push(startDate, endDate);
             query += ` WHERE timestamp >= $${queryParams.length - 1} AND timestamp <= $${queryParams.length}`;
         }
 

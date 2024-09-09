@@ -1,18 +1,22 @@
 const datasets = [
-    { label: 'Air Temperature (°C)',                    dataKey: 'air_temperature', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
-    { label: 'Soil Temperature (°C)',                   dataKey: 'soil_temperature', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' },
-    { label: 'Humidity (%)',                            dataKey: 'air_humidity', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
-    { label: 'Soil moisture (%)',                       dataKey: 'soil_moisture', borderColor: 'rgba(139, 69, 19, 1)', backgroundColor: 'rgba(139, 69, 19, 0.2)' },
-    { label: 'Solar Intensity (lx)',                  dataKey: 'solar_intensity', borderColor: 'rgba(255, 204, 0, 1)', backgroundColor: 'rgba(255, 204, 0, 0.2)' },
-    { label: 'Pressure (hPa)',                          dataKey: 'pressure', borderColor: 'rgba(153, 102, 255, 1)', backgroundColor: 'rgba(153, 102, 255, 0.2)' },
-    { label: 'Air Quality Index (AQI)',                 dataKey: 'aqi', borderColor: 'rgba(255, 159, 64, 1)', backgroundColor: 'rgba(255, 159, 64, 0.2)' },
-    { label: 'Total Volatile Organic Compounds (TVOC)', dataKey: 'tvoc', borderColor: 'rgba(34, 202, 236, 1)', backgroundColor: 'rgba(34, 202, 236, 0.2)' },
-    { label: 'CO2 (ppm)',                               dataKey: 'co2', borderColor: 'rgba(255, 99, 71, 1)', backgroundColor: 'rgba(255, 99, 71, 0.2)' },
-    { label: 'Wind Speed (m/s)',                        dataKey: 'wind_speed', borderColor: 'rgba(0, 123, 255, 1)', backgroundColor: 'rgba(0, 123, 255, 0.2)' },
-    { label: 'Particles 2.5µm (µg/m³)',                 dataKey: 'particles_2_5u', borderColor: 'rgba(192, 57, 43, 1)', backgroundColor: 'rgba(192, 57, 43, 0.2)' },
-    { label: 'Particles 5µm (µg/m³)',                   dataKey: 'particles_5u', borderColor: 'rgba(39, 174, 96, 1)', backgroundColor: 'rgba(39, 174, 96, 0.2)' },
-    { label: 'Particles 10µm (µg/m³)',                  dataKey: 'particles_10u', borderColor: 'rgba(241, 196, 15, 1)', backgroundColor: 'rgba(241, 196, 15, 0.2)' }
+    {tableNameSymbol: 'E', label: 'Air Temperature (°C)',                    dataKey: 'air_temperature', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Soil Temperature (°C)',                   dataKey: 'soil_temperature', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Humidity (%)',                            dataKey: 'air_humidity', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Soil moisture (%)',                       dataKey: 'soil_moisture', borderColor: 'rgba(139, 69, 19, 1)', backgroundColor: 'rgba(139, 69, 19, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Solar Intensity (lx)',                    dataKey: 'solar_intensity', borderColor: 'rgba(255, 204, 0, 1)', backgroundColor: 'rgba(255, 204, 0, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Pressure (hPa)',                          dataKey: 'pressure', borderColor: 'rgba(153, 102, 255, 1)', backgroundColor: 'rgba(153, 102, 255, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Air Quality Index (AQI)',                 dataKey: 'aqi', borderColor: 'rgba(255, 159, 64, 1)', backgroundColor: 'rgba(255, 159, 64, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Total Volatile Organic Compounds (TVOC)', dataKey: 'tvoc', borderColor: 'rgba(34, 202, 236, 1)', backgroundColor: 'rgba(34, 202, 236, 0.2)' },
+    {tableNameSymbol: 'E', label: 'CO2 (ppm)',                               dataKey: 'co2', borderColor: 'rgba(255, 99, 71, 1)', backgroundColor: 'rgba(255, 99, 71, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Wind Speed (m/s)',                        dataKey: 'wind_speed', borderColor: 'rgba(0, 123, 255, 1)', backgroundColor: 'rgba(0, 123, 255, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Particles 2.5µm (µg/m³)',                 dataKey: 'particles_2_5u', borderColor: 'rgba(192, 57, 43, 1)', backgroundColor: 'rgba(192, 57, 43, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Particles 5µm (µg/m³)',                   dataKey: 'particles_5u', borderColor: 'rgba(39, 174, 96, 1)', backgroundColor: 'rgba(39, 174, 96, 0.2)' },
+    {tableNameSymbol: 'E', label: 'Particles 10µm (µg/m³)',                  dataKey: 'particles_10u', borderColor: 'rgba(241, 196, 15, 1)', backgroundColor: 'rgba(241, 196, 15, 0.2)' },
+    {tableNameSymbol: 'C', label: 'Solar Current (A)',                       dataKey: 'solar_current', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
+    {tableNameSymbol: 'C', label: 'Solar Voltage (V)',                       dataKey: 'solar_voltage', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' },
+    {tableNameSymbol: 'C', label: 'State of Charge (%)',                     dataKey: 'state_of_charge', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' }
 ];
+// E - Environmental Data, C - Controls data 
 
 let chartInstance = null;
 
@@ -54,7 +58,14 @@ document.getElementById('datasetList').addEventListener('click', function(event)
     end = new Date();
     end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
 
-    fetchDataFromDB({
+    fetchFunction = null;
+    if (selectedDataset.tableNameSymbol === 'E') {
+        fetchFunction = fetchDataFromDB;
+    } else {
+        fetchFunction = fetchDeviceDataFromDB;
+    }
+
+    fetchFunction({
         startDate: (new Date(0)).toISOString(),
         endDate: (end).toISOString(),
         columns: ['timestamp', selectedDataset.dataKey]
@@ -75,7 +86,14 @@ document.getElementById('updateChart').addEventListener('click', function() {
         end = endDate ? new Date(endDate) : new Date();
         end.setDate(end.getDate() + 1) // we want to include the end date <start, end>
 
-        fetchDataFromDB({
+        fetchFunction = null;
+        if (selectedDataset.tableNameSymbol === 'E') {
+            fetchFunction = fetchDataFromDB;
+        } else {
+            fetchFunction = fetchDeviceDataFromDB;
+        }
+
+        fetchFunction({
             startDate: (start).toISOString(),
             endDate: (end).toISOString(),
             columns: ['timestamp', selectedDataset.dataKey]

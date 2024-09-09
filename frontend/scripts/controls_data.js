@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const batteryAge = latestRecord.battery_age; 
                 const batteryAgeElement = document.getElementById('battery-age');
-                const batteryAgeText = `Battery age: ${batteryAge} cycles`;
+                const batteryAgeText = `Battery voltage: ${batteryAge}V`;
                 batteryAgeElement.textContent = batteryAgeText;
             });
         }
