@@ -89,26 +89,41 @@
         }
     });
 
-
     function mergeDataByTimestamp(dataEnv, dataDevice) {
         const mergedData = [];
-
-        // Mapowanie danych środowiskowych po timestamp
+    
+        // Map environmental data by timestamp
         const dataEnvMap = dataEnv.reduce((map, item) => {
             map[item.timestamp] = item;
             return map;
         }, {});
-
-        // Iteracja po danych urządzeń i łączenie z danymi środowiskowymi
-        dataDevice.forEach(deviceRow => {
-            const timestamp = deviceRow.timestamp;
-            const envRow = dataEnvMap[timestamp] || {}; // Sprawdzenie, czy istnieje odpowiednik środowiskowy
-
-            // Łączenie danych środowiskowych i urządzeń dla tego samego timestamp
-            const mergedRow = { ...envRow, ...deviceRow };
+    
+        // Create a Set of unique timestamps from both datasets
+        const allTimestamps = new Set([...dataEnv.map(item => item.timestamp), ...dataDevice.map(item => item.timestamp)]);
+    
+        // Merge data by timestamp
+        allTimestamps.forEach(timestamp => {
+            const envRow = dataEnvMap[timestamp] || {}; // Environmental row or empty object if not present
+            const deviceRow = dataDevice.find(deviceRow => deviceRow.timestamp === timestamp) || {}; // Find corresponding device row
+    
+            // Merge rows, adding null for missing fields
+            const mergedRow = {};
+    
+            // Merge environmental data fields, assigning null for missing values
+            Object.keys(dataEnvMap[timestamp] || {}).forEach(key => {
+                mergedRow[key] = envRow[key] ?? null;
+            });
+    
+            // Merge device data fields, assigning null for missing values
+            Object.keys(deviceRow).forEach(key => {
+                mergedRow[key] = deviceRow[key] ?? null;
+            });
+    
+            mergedRow.timestamp = timestamp; // Ensure timestamp is added
+    
             mergedData.push(mergedRow);
         });
-
+    
         return mergedData;
     }
 
