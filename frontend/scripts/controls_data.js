@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 endDate: endDate.toISOString(),
                 columns: ['timestamp', 'solar_current', 'solar_voltage', 'state_of_charge', 'battery_age']
             }).then(data => {
-                solarIChart = createChart(data, 'Solar Current (A)', solarIDataset, 'solarIChart', solarIChart);
-                solarVChart = createChart(data, 'Solar Voltage (V)', solarVDataset, 'solarVChart', solarVChart);
+                solarIChart = createChart(data, 'Solar Current (mA)', solarIDataset, 'solarIChart', solarIChart);
+                solarVChart = createChart(data, 'Solar Voltage (mV)', solarVDataset, 'solarVChart', solarVChart);
                 chargeChart = createChart(data, 'State of Charge (%)', chargeDataset, 'chargeChart', chargeChart);
 
                 const latestRecord = data[data.length - 1];
