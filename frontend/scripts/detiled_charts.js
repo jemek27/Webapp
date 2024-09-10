@@ -12,9 +12,10 @@ const datasets = [
     {tableNameSymbol: 'E', label: 'Particles 2.5µm (µg/m³)',                 dataKey: 'particles_2_5u', borderColor: 'rgba(192, 57, 43, 1)', backgroundColor: 'rgba(192, 57, 43, 0.2)' },
     {tableNameSymbol: 'E', label: 'Particles 5µm (µg/m³)',                   dataKey: 'particles_5u', borderColor: 'rgba(39, 174, 96, 1)', backgroundColor: 'rgba(39, 174, 96, 0.2)' },
     {tableNameSymbol: 'E', label: 'Particles 10µm (µg/m³)',                  dataKey: 'particles_10u', borderColor: 'rgba(241, 196, 15, 1)', backgroundColor: 'rgba(241, 196, 15, 0.2)' },
-    {tableNameSymbol: 'C', label: 'Solar Current (A)',                       dataKey: 'solar_current', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
-    {tableNameSymbol: 'C', label: 'Solar Voltage (V)',                       dataKey: 'solar_voltage', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' },
-    {tableNameSymbol: 'C', label: 'State of Charge (%)',                     dataKey: 'state_of_charge', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' }
+    {tableNameSymbol: 'C', label: 'Solar Current (mA)',                       dataKey: 'solar_current', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' },
+    {tableNameSymbol: 'C', label: 'Solar Voltage (mV)',                       dataKey: 'solar_voltage', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' },
+    {tableNameSymbol: 'C', label: 'State of Charge (%)',                     dataKey: 'state_of_charge', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
+    {tableNameSymbol: 'C', label: 'Battery Voltage (V)',                     dataKey: 'battery_age', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' }
 ];
 // E - Environmental Data, C - Controls data 
 

@@ -164,20 +164,20 @@ def insert_data(data):
         conn.rollback()
 
 
-def insert_device_data(data):
+def insert_device_data(data, id_env):
     try:
         for i in range(len(data['timestamps'])):
             cur.execute(
                 sql.SQL("""
                         INSERT INTO device_data (timestamp, solar_current, solar_voltage, state_of_charge, 
-                        battery_age, id_env) VALUES (%s, %s, %s, %s, %s)"""),
+                        battery_age, id_env) VALUES (%s, %s, %s, %s, %s, %s)"""),
                 (
                     data['timestamps'][i],
                     data['solar_current'][i] if i < len(data['solar_current']) else None,
                     data['solar_voltage'][i] if i < len(data['solar_voltage']) else None,
                     data['state_of_charge'][i] if i < len(data['state_of_charge']) else None,
                     data['battery_age'][i] if i < len(data['battery_age']) else None, 
-                    data['id_env'] if 0 < len(data['id_env']) else None,
+                    id_env
                 )
             )
         conn.commit()
@@ -231,9 +231,10 @@ def menageDataDb(dataStrings):
         "timestamps", "solar_current", "solar_voltage", "state_of_charge", "battery_age"
     ]}
     print(dataE)
+    id_env = insert_data(dataE)
+    print(f'id_env {id_env}')
     print(dataC)
-    dataC['id_env'] = insert_data(dataE)
-    insert_device_data(dataC)
+    insert_device_data(dataC, id_env)
 
 def sleep(settingsPath):
     with open(settingsPath, 'r') as file:

@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
         endDate.setDate(endDate.getDate() + 1) // we want to include the end date <start, end>
 
             const solarIDataset = [
-                { label: 'Solar Current (A)', dataKey: 'solar_current', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' }
+                { label: 'Solar Current (mA)', dataKey: 'solar_current', borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.2)' }
             ];
             const solarVDataset = [
-                { label: 'Solar Voltage (V)', dataKey: 'solar_voltage', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' }
+                { label: 'Solar Voltage (mV)', dataKey: 'solar_voltage', borderColor: 'rgba(255, 99, 132, 1)', backgroundColor: 'rgba(255, 99, 132, 0.2)' }
             ];
             const chargeDataset = [
                 { label: 'State of Charge (%)', dataKey: 'state_of_charge', borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' }
