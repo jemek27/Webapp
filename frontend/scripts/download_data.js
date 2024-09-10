@@ -62,6 +62,9 @@
         tableHead.innerHTML = '<tr><th>Timestamp</th></tr>';
     
         selectedColumns.slice(1).forEach(column => {
+            if (column == 'battery_age') {
+                column = 'battery_voltage'; //looks bad but had to do a quick fix 
+            }
             const th = document.createElement('th');
             th.textContent = column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
             tableHead.querySelector('tr').appendChild(th);
