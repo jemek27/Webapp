@@ -79,12 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }).then(data => {
             temperatureChart = createChart(data,     'Temperature (°C)', temperatureDataset, 'temperatureChart', temperatureChart);
             humidityChart = createChart(data,        'Humidity and moisture (%)', humidityDataset, 'humidityChart', humidityChart);
-            sunlightChart = createChart(data,        'Intensity (W/m²)', sunlightDataset, 'sunlightChart', sunlightChart);
-            pressureChart = createChart(data,        pressureDataset.label, pressureDataset, 'pressureChart', pressureChart);
-            AQIChart = createChart(data,             AQIDataset.label, AQIDataset, 'AQIChart', AQIChart);
-            TVOCChart = createChart(data,            TVOCDataset.label, TVOCDataset, 'TVOCChart', TVOCChart);
-            CO2Chart = createChart(data,             CO2Dataset.label, CO2Dataset, 'CO2Chart', CO2Chart);
-            windSpeedChart = createChart(data,       windSpeedDataset.label, windSpeedDataset, 'windSpeedChart', windSpeedChart);
+            sunlightChart = createChart(data,        'Intensity (lx)', sunlightDataset, 'sunlightChart', sunlightChart);
+            pressureChart = createChart(data,        pressureDataset[0].label, pressureDataset, 'pressureChart', pressureChart);
+            AQIChart = createChart(data,             AQIDataset[0].label, AQIDataset, 'AQIChart', AQIChart);
+            TVOCChart = createChart(data,            TVOCDataset[0].label, TVOCDataset, 'TVOCChart', TVOCChart);
+            CO2Chart = createChart(data,             CO2Dataset[0].label, CO2Dataset, 'CO2Chart', CO2Chart);
+            windSpeedChart = createChart(data,       windSpeedDataset[0].label, windSpeedDataset, 'windSpeedChart', windSpeedChart);
             particlesChart = createChart(data,       'Particles (µg/m³)', particlesDataset, 'particlesChart', particlesChart);
         });
     }
