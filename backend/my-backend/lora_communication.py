@@ -136,7 +136,9 @@ def insert_data(data):
     try:
         for i in range(len(data['timestamps'])):
             cur.execute(
-                sql.SQL("INSERT INTO environmental_data (timestamp, air_temperature, soil_temperature, air_humidity, soil_moisture, solar_intensity, pressure, AQI, TVOC, CO2, wind_speed, particles_2_5u, particles_5u, particles_10u) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"),
+                sql.SQL("""INSERT INTO environmental_data (timestamp, air_temperature, soil_temperature, air_humidity, soil_moisture, 
+                        solar_intensity, pressure, AQI, TVOC, CO2, wind_speed, particles_2_5u, particles_5u, particles_10u) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""),
                 (
                     data['timestamps'][i],
                     data['air_temperature'][i] if i < len(data['air_temperature']) else None,
@@ -156,6 +158,7 @@ def insert_data(data):
             )
         conn.commit()
         print("Data was saved")
+        return cur.fetchone()[0]  # Return the id of the inserted row
     except Exception as e:
         print(f"Error inserting data: {e}")
         conn.rollback()
@@ -165,13 +168,16 @@ def insert_device_data(data):
     try:
         for i in range(len(data['timestamps'])):
             cur.execute(
-                sql.SQL("INSERT INTO device_data (timestamp, solar_current, solar_voltage, state_of_charge, battery_age) VALUES (%s, %s, %s, %s, %s)"),
+                sql.SQL("""
+                        INSERT INTO device_data (timestamp, solar_current, solar_voltage, state_of_charge, 
+                        battery_age, id_env) VALUES (%s, %s, %s, %s, %s)"""),
                 (
                     data['timestamps'][i],
                     data['solar_current'][i] if i < len(data['solar_current']) else None,
                     data['solar_voltage'][i] if i < len(data['solar_voltage']) else None,
                     data['state_of_charge'][i] if i < len(data['state_of_charge']) else None,
-                    data['battery_age'][i]if i < len(data['battery_age']) else None,         
+                    data['battery_age'][i] if i < len(data['battery_age']) else None, 
+                    data['id_env'] if 0 < len(data['id_env']) else None,
                 )
             )
         conn.commit()
@@ -226,7 +232,7 @@ def menageDataDb(dataStrings):
     ]}
     print(dataE)
     print(dataC)
-    insert_data(dataE)
+    dataC['id_env'] = insert_data(dataE)
     insert_device_data(dataC)
 
 def sleep(settingsPath):
