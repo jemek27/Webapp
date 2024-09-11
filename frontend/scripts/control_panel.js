@@ -3,6 +3,7 @@ function fetchSettings() {
             console.log('Settings:', data);
             document.getElementById('currentSignalIntervalsTime').textContent = `Current interval time: ${data.SignalIntervals} min`;
             document.getElementById('resetText').style.display = data.ResetRequest ? 'block' : 'none';
+            document.getElementById('resetButton').textContent = data.ResetRequest ? 'Unrequest reset' : 'Request reset';
         })
 }
 
@@ -37,9 +38,11 @@ function handleIntervalInput() {
 
 function toggleResetText() {
     const resetText = document.getElementById('resetText');
+    const resetButton = document.getElementById('resetButton');
+
     const isResetRequested = resetText.style.display === 'none' ? 1 : 0;
-    
     resetText.style.display = isResetRequested ? 'block' : 'none';
+    resetButton.textContent = isResetRequested ? 'Unrequest reset' : 'Request reset';
 
     fetch('http://localhost:3000/settings', {
         method: 'POST',
