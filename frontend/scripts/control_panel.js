@@ -11,7 +11,7 @@ function handleIntervalInput() {
     document.getElementById('signalIntervalsTime').addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {  
             const inputValue = parseFloat(event.target.value); 
-            if (inputValue > 10) {
+            if (inputValue >= 10) {
                 document.getElementById('intervalErrorMessage').textContent = '';
 
                 fetch('http://localhost:3000/settings', {
