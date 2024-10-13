@@ -1,0 +1,409 @@
+emanuel@emanuelLaptop:~$ sudo usermod -aG dialout $USER
+[sudo] password for emanuel: 
+emanuel@emanuelLaptop:~$ sudo /usr/local/bin/python3.9 /home/emanuel/Dokumenty/Webapp/backend/my-backend/lora_communication.py
+[sudo] password for emanuel: 
+Sending: AT+RESET
+Sending: AT+MODE=TEST
+Sending: AT+TEST=RFCFG,868,SF12,125,12,15,14,ON,OFF,OFF
+Sending: AT+TEST=RXLRPKT
+^CSignal received, shutting down...
+emanuel@emanuelLaptop:~$ sudo /usr/local/bin/python3.9 /home/emanuel/Dokumenty/Webapp/backend/my-backend/lora_communication.py
+Sending: AT+RESET
+Received: +RESET: OK
+Time: 2024-10-12T15:09:48
+Sending: AT+MODE=TEST
+Received: +MODE: TEST
+Time: 2024-10-12T15:09:50
+Sending: AT+TEST=RFCFG,868,SF12,125,12,15,14,ON,OFF,OFF
+Received: +TEST: RFCFG F:868000000, SF12, BW125K, TXPR:12, RXPR:15, POW:14dBm, CRC:ON, IQ:OFF, NET:OFF
+Time: 2024-10-12T15:09:52
+Sending: AT+TEST=RXLRPKT
+Received: +TEST: RXLRPKT
+Time: 2024-10-12T15:09:54
+Received: +TEST: LEN:64, RSSI:-66, SNR:5
+Time: 2024-10-12T15:13:45
+[]
+Received: +TEST: RX "32322E313B36302E313B3938392E343B37362E373B313B31353B3430303B33333B312E313B3434322E353B303B303B303B303B333B32332E333B313B53203131"
+Time: 2024-10-12T15:13:45
+['32322E313B36302E313B3938392E343B37362E373B313B31353B3430303B33333B312E313B3434322E353B303B303B303B303B333B32332E333B313B53203131']
+Translated: 22.1;60.1;989.4;76.7;1;15;400;33;1.1;442.5;0;0;0;0;3;23.3;1;S 11
+['22.1', '60.1', '989.4', '76.7', '1', '15', '400', '33', '1.1', '442.5', '0', '0', '0', '0', '3', '23.3', '1', 'S 11']
+SignalIntervals: 11
+ResetRequest: 0
+Curr sleep: 11.0
+mmmmmm data
+[22.1, 60.1, 989.4, 76.7, 1.0, 15.0, 400.0, 33.0, 1.1, 442.5, 0.0, 0.0, 0.0, 0.0, 3.0, 23.3, 1.0]
+{'timestamps': ['2024-10-12T15:13:45'], 'air_temperature': [22.1], 'soil_temperature': [23.3], 'air_humidity': [60.1], 'soil_moisture': [33.0], 'solar_intensity': [76.7], 'pressure': [989.4], 'AQI': [1.0], 'TVOC': [15.0], 'CO2': [400.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1684
+{'timestamps': ['2024-10-12T15:13:45'], 'solar_current': [1.1], 'solar_voltage': [442.5], 'state_of_charge': [0.0], 'battery_age': [3.0]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-66, SNR:4
+Time: 2024-10-12T15:13:51
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T15:13:51
+['536C656570']
+Translated: Sleep
+Going to sleep for: 11
+Up
+Received: +TEST: LEN:69, RSSI:-92, SNR:5
+Time: 2024-10-12T15:26:00
+[]
+Received: +TEST: RX "32312E353B35322E383B3936383B31363730303B313B32363B3430353B36373B36302E333B323332322E353B303B303B303B312E353B332E313B31342E373B313B53203131"
+Time: 2024-10-12T15:26:00
+['32312E353B35322E383B3936383B31363730303B313B32363B3430353B36373B36302E333B323332322E353B303B303B303B312E353B332E313B31342E373B313B53203131']
+Translated: 21.5;52.8;968;16700;1;26;405;67;60.3;2322.5;0;0;0;1.5;3.1;14.7;1;S 11
+['21.5', '52.8', '968', '16700', '1', '26', '405', '67', '60.3', '2322.5', '0', '0', '0', '1.5', '3.1', '14.7', '1', 'S 11']
+SignalIntervals: 11
+ResetRequest: 0
+Curr sleep: 11.0
+mmmmmm data
+[21.5, 52.8, 968.0, 16700.0, 1.0, 26.0, 405.0, 67.0, 60.3, 2322.5, 0.0, 0.0, 0.0, 1.5, 3.1, 14.7, 1.0]
+{'timestamps': ['2024-10-12T15:26:00'], 'air_temperature': [21.5], 'soil_temperature': [14.7], 'air_humidity': [52.8], 'soil_moisture': [67.0], 'solar_intensity': [16700.0], 'pressure': [968.0], 'AQI': [1.0], 'TVOC': [26.0], 'CO2': [405.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1685
+{'timestamps': ['2024-10-12T15:26:00'], 'solar_current': [60.3], 'solar_voltage': [2322.5], 'state_of_charge': [1.5], 'battery_age': [3.1]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-97, SNR:2
+Time: 2024-10-12T15:26:05
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T15:26:05
+['536C656570']
+Translated: Sleep
+Going to sleep for: 11
+Up
+Received: +TEST: LEN:71, RSSI:-91, SNR:4
+Time: 2024-10-12T15:38:15
+[]
+Received: +TEST: RX "32302E363B35312E383B3935332E353B31353738362E373B313B31363B3430303B36363B38382E333B323332382E383B303B303B303B323B332E313B31342E373B313B53203131"
+Time: 2024-10-12T15:38:15
+['32302E363B35312E383B3935332E353B31353738362E373B313B31363B3430303B36363B38382E333B323332382E383B303B303B303B323B332E313B31342E373B313B53203131']
+Translated: 20.6;51.8;953.5;15786.7;1;16;400;66;88.3;2328.8;0;0;0;2;3.1;14.7;1;S 11
+['20.6', '51.8', '953.5', '15786.7', '1', '16', '400', '66', '88.3', '2328.8', '0', '0', '0', '2', '3.1', '14.7', '1', 'S 11']
+SignalIntervals: 15
+ResetRequest: 0
+Curr sleep: 11.0
+Sending: AT+TEST=TXLRSTR,"15"
+Received: +TEST: TXLRSTR "15"
+Time: 2024-10-12T15:38:18
+mmmmmm data
+[20.6, 51.8, 953.5, 15786.7, 1.0, 16.0, 400.0, 66.0, 88.3, 2328.8, 0.0, 0.0, 0.0, 2.0, 3.1, 14.7, 1.0]
+{'timestamps': ['2024-10-12T15:38:21'], 'air_temperature': [20.6], 'soil_temperature': [14.7], 'air_humidity': [51.8], 'soil_moisture': [66.0], 'solar_intensity': [15786.7], 'pressure': [953.5], 'AQI': [1.0], 'TVOC': [16.0], 'CO2': [400.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1686
+{'timestamps': ['2024-10-12T15:38:21'], 'solar_current': [88.3], 'solar_voltage': [2328.8], 'state_of_charge': [2.0], 'battery_age': [3.1]}
+Device data was saved
+Sending: AT+TEST=RXLRPKT
+Received: +TEST: TX DONE
+Time: 2024-10-12T15:38:22
+Received: +TEST: RXLRPKT
+Time: 2024-10-12T15:38:23
+[]
+Received: +TEST: LEN:67, RSSI:-90, SNR:3
+Time: 2024-10-12T15:54:29
+[]
+Received: +TEST: RX "31382E393B35302E343B3932323B363936332E333B313B33373B3433303B37373B3130302E343B313631303B303B303B303B303B332E323B31342E383B313B53203135"
+Time: 2024-10-12T15:54:29
+['31382E393B35302E343B3932323B363936332E333B313B33373B3433303B37373B3130302E343B313631303B303B303B303B303B332E323B31342E383B313B53203135']
+Translated: 18.9;50.4;922;6963.3;1;37;430;77;100.4;1610;0;0;0;0;3.2;14.8;1;S 15
+['18.9', '50.4', '922', '6963.3', '1', '37', '430', '77', '100.4', '1610', '0', '0', '0', '0', '3.2', '14.8', '1', 'S 15']
+SignalIntervals: 15
+ResetRequest: 0
+Curr sleep: 15.0
+mmmmmm data
+[18.9, 50.4, 922.0, 6963.3, 1.0, 37.0, 430.0, 77.0, 100.4, 1610.0, 0.0, 0.0, 0.0, 0.0, 3.2, 14.8, 1.0]
+{'timestamps': ['2024-10-12T15:54:29'], 'air_temperature': [18.9], 'soil_temperature': [14.8], 'air_humidity': [50.4], 'soil_moisture': [77.0], 'solar_intensity': [6963.3], 'pressure': [922.0], 'AQI': [1.0], 'TVOC': [37.0], 'CO2': [430.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1687
+{'timestamps': ['2024-10-12T15:54:29'], 'solar_current': [100.4], 'solar_voltage': [1610.0], 'state_of_charge': [0.0], 'battery_age': [3.2]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-92, SNR:5
+Time: 2024-10-12T15:54:34
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T15:54:34
+['536C656570']
+Translated: Sleep
+Going to sleep for: 15
+Up
+Received: +TEST: LEN:74, RSSI:-92, SNR:4
+Time: 2024-10-12T16:10:43
+[]
+Received: +TEST: RX "31372E313B35302E393B3930322E323B31313038362E373B313B32323B3430303B37333B3231302E393B313639322E353B303B303B303B302E393B332E323B31342E363B313B53203135"
+Time: 2024-10-12T16:10:43
+['31372E313B35302E393B3930322E323B31313038362E373B313B32323B3430303B37333B3231302E393B313639322E353B303B303B303B302E393B332E323B31342E363B313B53203135']
+Translated: 17.1;50.9;902.2;11086.7;1;22;400;73;210.9;1692.5;0;0;0;0.9;3.2;14.6;1;S 15
+['17.1', '50.9', '902.2', '11086.7', '1', '22', '400', '73', '210.9', '1692.5', '0', '0', '0', '0.9', '3.2', '14.6', '1', 'S 15']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 15.0
+Sending: AT+TEST=TXLRSTR,"10"
+Received: +TEST: TXLRSTR "10"
+Time: 2024-10-12T16:10:46
+mmmmmm data
+[17.1, 50.9, 902.2, 11086.7, 1.0, 22.0, 400.0, 73.0, 210.9, 1692.5, 0.0, 0.0, 0.0, 0.9, 3.2, 14.6, 1.0]
+{'timestamps': ['2024-10-12T16:10:49'], 'air_temperature': [17.1], 'soil_temperature': [14.6], 'air_humidity': [50.9], 'soil_moisture': [73.0], 'solar_intensity': [11086.7], 'pressure': [902.2], 'AQI': [1.0], 'TVOC': [22.0], 'CO2': [400.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1688
+{'timestamps': ['2024-10-12T16:10:49'], 'solar_current': [210.9], 'solar_voltage': [1692.5], 'state_of_charge': [0.9], 'battery_age': [3.2]}
+Device data was saved
+Sending: AT+TEST=RXLRPKT
+Received: +TEST: TX DONE
+Time: 2024-10-12T16:10:50
+Received: +TEST: RXLRPKT
+Time: 2024-10-12T16:10:51
+[]
+Received: +TEST: LEN:74, RSSI:-102, SNR:-4
+Time: 2024-10-12T16:21:59
+[]
+Received: +TEST: RX "31362E393B35322E343B3931352E363B31313830332E333B313B34343B3434343B36313B3233342E363B313930332E383B303B303B303B302E343B332E323B31342E363B313B53203130"
+Time: 2024-10-12T16:21:59
+['31362E393B35322E343B3931352E363B31313830332E333B313B34343B3434343B36313B3233342E363B313930332E383B303B303B303B302E343B332E323B31342E363B313B53203130']
+Translated: 16.9;52.4;915.6;11803.3;1;44;444;61;234.6;1903.8;0;0;0;0.4;3.2;14.6;1;S 10
+['16.9', '52.4', '915.6', '11803.3', '1', '44', '444', '61', '234.6', '1903.8', '0', '0', '0', '0.4', '3.2', '14.6', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[16.9, 52.4, 915.6, 11803.3, 1.0, 44.0, 444.0, 61.0, 234.6, 1903.8, 0.0, 0.0, 0.0, 0.4, 3.2, 14.6, 1.0]
+{'timestamps': ['2024-10-12T16:21:59'], 'air_temperature': [16.9], 'soil_temperature': [14.6], 'air_humidity': [52.4], 'soil_moisture': [61.0], 'solar_intensity': [11803.3], 'pressure': [915.6], 'AQI': [1.0], 'TVOC': [44.0], 'CO2': [444.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1689
+{'timestamps': ['2024-10-12T16:21:59'], 'solar_current': [234.6], 'solar_voltage': [1903.8], 'state_of_charge': [0.4], 'battery_age': [3.2]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-103, SNR:-3
+Time: 2024-10-12T16:22:05
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T16:22:05
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:69, RSSI:-80, SNR:6
+Time: 2024-10-12T16:33:15
+[]
+Received: +TEST: RX "31362E353B35322E343B3930343B31343532362E373B313B33373B3432393B383B3236312E393B323038303B303B303B303B302E343B332E333B31352E373B313B53203130"
+Time: 2024-10-12T16:33:15
+['31362E353B35322E343B3930343B31343532362E373B313B33373B3432393B383B3236312E393B323038303B303B303B303B302E343B332E333B31352E373B313B53203130']
+Translated: 16.5;52.4;904;14526.7;1;37;429;8;261.9;2080;0;0;0;0.4;3.3;15.7;1;S 10
+['16.5', '52.4', '904', '14526.7', '1', '37', '429', '8', '261.9', '2080', '0', '0', '0', '0.4', '3.3', '15.7', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[16.5, 52.4, 904.0, 14526.7, 1.0, 37.0, 429.0, 8.0, 261.9, 2080.0, 0.0, 0.0, 0.0, 0.4, 3.3, 15.7, 1.0]
+{'timestamps': ['2024-10-12T16:33:15'], 'air_temperature': [16.5], 'soil_temperature': [15.7], 'air_humidity': [52.4], 'soil_moisture': [8.0], 'solar_intensity': [14526.7], 'pressure': [904.0], 'AQI': [1.0], 'TVOC': [37.0], 'CO2': [429.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1690
+{'timestamps': ['2024-10-12T16:33:15'], 'solar_current': [261.9], 'solar_voltage': [2080.0], 'state_of_charge': [0.4], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-79, SNR:4
+Time: 2024-10-12T16:33:21
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T16:33:21
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:5, RSSI:-105, SNR:-22
+Time: 2024-10-12T16:44:37
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T16:44:37
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:70, RSSI:-101, SNR:-1
+Time: 2024-10-12T17:25:16
+[]
+Received: +TEST: RX "31322E313B35362E353B3834372E343B333632362E373B313B32393B3431323B37333B36332E353B313236362E323B303B303B303B303B332E333B31342E363B313B53203130"
+Time: 2024-10-12T17:25:16
+['31322E313B35362E353B3834372E343B333632362E373B313B32393B3431323B37333B36332E353B313236362E323B303B303B303B303B332E333B31342E363B313B53203130']
+Translated: 12.1;56.5;847.4;3626.7;1;29;412;73;63.5;1266.2;0;0;0;0;3.3;14.6;1;S 10
+['12.1', '56.5', '847.4', '3626.7', '1', '29', '412', '73', '63.5', '1266.2', '0', '0', '0', '0', '3.3', '14.6', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[12.1, 56.5, 847.4, 3626.7, 1.0, 29.0, 412.0, 73.0, 63.5, 1266.2, 0.0, 0.0, 0.0, 0.0, 3.3, 14.6, 1.0]
+{'timestamps': ['2024-10-12T17:25:16'], 'air_temperature': [12.1], 'soil_temperature': [14.6], 'air_humidity': [56.5], 'soil_moisture': [73.0], 'solar_intensity': [3626.7], 'pressure': [847.4], 'AQI': [1.0], 'TVOC': [29.0], 'CO2': [412.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1691
+{'timestamps': ['2024-10-12T17:25:16'], 'solar_current': [63.5], 'solar_voltage': [1266.2], 'state_of_charge': [0.0], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-101, SNR:-1
+Time: 2024-10-12T17:25:22
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:25:22
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:64, RSSI:-103, SNR:-4
+Time: 2024-10-12T17:29:12
+[]
+Received: +TEST: RX "31323B35372E323B3834352E333B313536303B313B32323B3430303B37343B31382E323B313135303B303B303B303B303B332E333B31342E363B313B53203130"
+Time: 2024-10-12T17:29:12
+['31323B35372E323B3834352E333B313536303B313B32323B3430303B37343B31382E323B313135303B303B303B303B303B332E333B31342E363B313B53203130']
+Translated: 12;57.2;845.3;1560;1;22;400;74;18.2;1150;0;0;0;0;3.3;14.6;1;S 10
+['12', '57.2', '845.3', '1560', '1', '22', '400', '74', '18.2', '1150', '0', '0', '0', '0', '3.3', '14.6', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[12.0, 57.2, 845.3, 1560.0, 1.0, 22.0, 400.0, 74.0, 18.2, 1150.0, 0.0, 0.0, 0.0, 0.0, 3.3, 14.6, 1.0]
+{'timestamps': ['2024-10-12T17:29:12'], 'air_temperature': [12.0], 'soil_temperature': [14.6], 'air_humidity': [57.2], 'soil_moisture': [74.0], 'solar_intensity': [1560.0], 'pressure': [845.3], 'AQI': [1.0], 'TVOC': [22.0], 'CO2': [400.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1692
+{'timestamps': ['2024-10-12T17:29:12'], 'solar_current': [18.2], 'solar_voltage': [1150.0], 'state_of_charge': [0.0], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-102, SNR:-2
+Time: 2024-10-12T17:29:17
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:29:17
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:60, RSSI:-107, SNR:-12
+Time: 2024-10-12T17:35:43
+[]
+Received: +TEST: RX "31313B35382E343B3830332E333B3732362E373B303B303B303B38303B392E313B3538372E353B303B303B303B303B332E333B31353B313B53203130"
+Time: 2024-10-12T17:35:43
+['31313B35382E343B3830332E333B3732362E373B303B303B303B38303B392E313B3538372E353B303B303B303B303B332E333B31353B313B53203130']
+Translated: 11;58.4;803.3;726.7;0;0;0;80;9.1;587.5;0;0;0;0;3.3;15;1;S 10
+['11', '58.4', '803.3', '726.7', '0', '0', '0', '80', '9.1', '587.5', '0', '0', '0', '0', '3.3', '15', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[11.0, 58.4, 803.3, 726.7, 0.0, 0.0, 0.0, 80.0, 9.1, 587.5, 0.0, 0.0, 0.0, 0.0, 3.3, 15.0, 1.0]
+{'timestamps': ['2024-10-12T17:35:43'], 'air_temperature': [11.0], 'soil_temperature': [15.0], 'air_humidity': [58.4], 'soil_moisture': [80.0], 'solar_intensity': [726.7], 'pressure': [803.3], 'AQI': [0.0], 'TVOC': [0.0], 'CO2': [0.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1693
+{'timestamps': ['2024-10-12T17:35:43'], 'solar_current': [9.1], 'solar_voltage': [587.5], 'state_of_charge': [0.0], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-105, SNR:-11
+Time: 2024-10-12T17:35:49
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:35:49
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:62, RSSI:-105, SNR:-16
+Time: 2024-10-12T17:39:01
+[]
+Received: +TEST: RX "31302E313B35392E343B3737393B3437332E333B303B303B303B37363B352E373B3531312E333B303B303B303B303B332E333B31352E313B313B53203130"
+Time: 2024-10-12T17:39:01
+['31302E313B35392E343B3737393B3437332E333B303B303B303B37363B352E373B3531312E333B303B303B303B303B332E333B31352E313B313B53203130']
+Translated: 10.1;59.4;779;473.3;0;0;0;76;5.7;511.3;0;0;0;0;3.3;15.1;1;S 10
+['10.1', '59.4', '779', '473.3', '0', '0', '0', '76', '5.7', '511.3', '0', '0', '0', '0', '3.3', '15.1', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[10.1, 59.4, 779.0, 473.3, 0.0, 0.0, 0.0, 76.0, 5.7, 511.3, 0.0, 0.0, 0.0, 0.0, 3.3, 15.1, 1.0]
+{'timestamps': ['2024-10-12T17:39:01'], 'air_temperature': [10.1], 'soil_temperature': [15.1], 'air_humidity': [59.4], 'soil_moisture': [76.0], 'solar_intensity': [473.3], 'pressure': [779.0], 'AQI': [0.0], 'TVOC': [0.0], 'CO2': [0.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1694
+{'timestamps': ['2024-10-12T17:39:01'], 'solar_current': [5.7], 'solar_voltage': [511.3], 'state_of_charge': [0.0], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:64, RSSI:-105, SNR:-18
+Time: 2024-10-12T17:42:12
+[]
+Received: +TEST: RX "392E313B36302E343B3735312E343B3737362E373B303B303B303B34303B31312E313B3639372E353B303B303B303B303B332E323B31342E313B313B53203130"
+Time: 2024-10-12T17:42:12
+['392E313B36302E343B3735312E343B3737362E373B303B303B303B34303B31312E313B3639372E353B303B303B303B303B332E323B31342E313B313B53203130']
+Translated: 9.1;60.4;751.4;776.7;0;0;0;40;11.1;697.5;0;0;0;0;3.2;14.1;1;S 10
+['9.1', '60.4', '751.4', '776.7', '0', '0', '0', '40', '11.1', '697.5', '0', '0', '0', '0', '3.2', '14.1', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[9.1, 60.4, 751.4, 776.7, 0.0, 0.0, 0.0, 40.0, 11.1, 697.5, 0.0, 0.0, 0.0, 0.0, 3.2, 14.1, 1.0]
+{'timestamps': ['2024-10-12T17:42:12'], 'air_temperature': [9.1], 'soil_temperature': [14.1], 'air_humidity': [60.4], 'soil_moisture': [40.0], 'solar_intensity': [776.7], 'pressure': [751.4], 'AQI': [0.0], 'TVOC': [0.0], 'CO2': [0.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1695
+{'timestamps': ['2024-10-12T17:42:12'], 'solar_current': [11.1], 'solar_voltage': [697.5], 'state_of_charge': [0.0], 'battery_age': [3.2]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-105, SNR:-12
+Time: 2024-10-12T17:42:18
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:42:18
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:61, RSSI:-104, SNR:-12
+Time: 2024-10-12T17:49:18
+[]
+Received: +TEST: RX "382E323B36322E383B3735362E333B3730303B303B303B303B35323B392E393B3731312E323B303B303B303B303B332E333B31332E393B313B53203130"
+Time: 2024-10-12T17:49:18
+['382E323B36322E383B3735362E333B3730303B303B303B303B35323B392E393B3731312E323B303B303B303B303B332E333B31332E393B313B53203130']
+Translated: 8.2;62.8;756.3;700;0;0;0;52;9.9;711.2;0;0;0;0;3.3;13.9;1;S 10
+['8.2', '62.8', '756.3', '700', '0', '0', '0', '52', '9.9', '711.2', '0', '0', '0', '0', '3.3', '13.9', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[8.2, 62.8, 756.3, 700.0, 0.0, 0.0, 0.0, 52.0, 9.9, 711.2, 0.0, 0.0, 0.0, 0.0, 3.3, 13.9, 1.0]
+{'timestamps': ['2024-10-12T17:49:18'], 'air_temperature': [8.2], 'soil_temperature': [13.9], 'air_humidity': [62.8], 'soil_moisture': [52.0], 'solar_intensity': [700.0], 'pressure': [756.3], 'AQI': [0.0], 'TVOC': [0.0], 'CO2': [0.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1696
+{'timestamps': ['2024-10-12T17:49:18'], 'solar_current': [9.9], 'solar_voltage': [711.2], 'state_of_charge': [0.0], 'battery_age': [3.3]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-103, SNR:-19
+Time: 2024-10-12T17:49:23
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:49:23
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:5, RSSI:-104, SNR:-23
+Time: 2024-10-12T17:57:58
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T17:57:58
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
+Received: +TEST: LEN:62, RSSI:-94, SNR:4
+Time: 2024-10-12T18:03:12
+[]
+Received: +TEST: RX "362E393B36372E393B3739312E363B35362E373B303B303B303B37363B302E373B3434362E333B303B303B303B303B332E323B31332E333B313B53203130"
+Time: 2024-10-12T18:03:12
+['362E393B36372E393B3739312E363B35362E373B303B303B303B37363B302E373B3434362E333B303B303B303B303B332E323B31332E333B313B53203130']
+Translated: 6.9;67.9;791.6;56.7;0;0;0;76;0.7;446.3;0;0;0;0;3.2;13.3;1;S 10
+['6.9', '67.9', '791.6', '56.7', '0', '0', '0', '76', '0.7', '446.3', '0', '0', '0', '0', '3.2', '13.3', '1', 'S 10']
+SignalIntervals: 10
+ResetRequest: 0
+Curr sleep: 10.0
+mmmmmm data
+[6.9, 67.9, 791.6, 56.7, 0.0, 0.0, 0.0, 76.0, 0.7, 446.3, 0.0, 0.0, 0.0, 0.0, 3.2, 13.3, 1.0]
+{'timestamps': ['2024-10-12T18:03:12'], 'air_temperature': [6.9], 'soil_temperature': [13.3], 'air_humidity': [67.9], 'soil_moisture': [76.0], 'solar_intensity': [56.7], 'pressure': [791.6], 'AQI': [0.0], 'TVOC': [0.0], 'CO2': [0.0], 'wind_speed': [1.0], 'particles_2.5u': [0.0], 'particles_5u': [0.0], 'particles_10u': [0.0]}
+Data was saved
+id_env 1697
+{'timestamps': ['2024-10-12T18:03:12'], 'solar_current': [0.7], 'solar_voltage': [446.3], 'state_of_charge': [0.0], 'battery_age': [3.2]}
+Device data was saved
+Received: +TEST: LEN:5, RSSI:-96, SNR:4
+Time: 2024-10-12T18:03:18
+[]
+Received: +TEST: RX "536C656570"
+Time: 2024-10-12T18:03:18
+['536C656570']
+Translated: Sleep
+Going to sleep for: 10
+Up
